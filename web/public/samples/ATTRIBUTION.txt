@@ -1,0 +1,15 @@
+Demo audio clips in this directory are taken from the VoiceBank+DEMAND test set:
+
+  Valentini-Botinhao, Cassia. (2017). Noisy speech database for training speech
+  enhancement algorithms and TTS models, 2016 [sound]. University of Edinburgh.
+  School of Informatics. Centre for Speech Technology Research (CSTR).
+  https://doi.org/10.7488/ds/2117
+  https://datashare.ed.ac.uk/handle/10283/2791
+
+Licensed under the Creative Commons Attribution 4.0 International licence (CC BY 4.0),
+https://creativecommons.org/licenses/by/4.0/
+
+The clean speech is from the VCTK / Voice Bank corpus (Veaux, Yamagishi & King, 2013);
+the noise is from the DEMAND database (Thiemann, Ito & Vincent, 2013).
+
+Modifications: resampled from 48 kHz to 16 kHz mono (soxr, VHQ) and stored as 16-bit PCM WAV.

@@ -1,0 +1,10 @@
+# R6: CRN-256 + knowledge distillation from the bi-GRU-512 teacher (PLAN.md §4.4, §4.9), beta = 1.0.
+base: crn_small.yaml
+run_name: crn256_kd
+model:
+  kwargs:
+    hidden: 256
+distill:
+  teacher_ckpt: checkpoints/teacher_bigru512/best.pt
+  beta: 1.0
+  gamma: 0.0

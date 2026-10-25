@@ -1,0 +1,6 @@
+# R11: CRN-256 with lookahead k = 2 frames (PLAN.md §4.11): algorithmic latency 40 ms.
+base: crn_small.yaml
+run_name: crn256_la2
+model:
+  kwargs:
+    lookahead: 2

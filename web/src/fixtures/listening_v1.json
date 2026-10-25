@@ -1,0 +1,73 @@
+{
+  "version": 1,
+  "conditions": ["noisy", "wiener", "crn", "crn_kd", "clean"],
+  "hidden_reference": "clean",
+  "low_anchor": "noisy",
+  "practice": {
+    "id": "practice",
+    "files": {
+      "noisy": "samples/p257_007_noisy.wav",
+      "wiener": "samples/p257_007_noisy.wav",
+      "crn": "samples/p257_007_clean.wav",
+      "crn_kd": "samples/p257_007_clean.wav",
+      "clean": "samples/p257_007_clean.wav"
+    }
+  },
+  "trials": [
+    {
+      "id": "t01",
+      "utterance": "p232_032",
+      "set": "vbd",
+      "noise_type": "cafe",
+      "snr_db": 2.5,
+      "files": {
+        "noisy": "samples/p232_032_noisy.wav",
+        "wiener": "samples/p232_032_noisy.wav",
+        "crn": "samples/p232_032_clean.wav",
+        "crn_kd": "samples/p232_032_clean.wav",
+        "clean": "samples/p232_032_clean.wav"
+      }
+    },
+    {
+      "id": "t02",
+      "utterance": "p257_223",
+      "set": "vbd",
+      "noise_type": "public square",
+      "snr_db": 2.5,
+      "files": {
+        "noisy": "samples/p257_223_noisy.wav",
+        "wiener": "samples/p257_223_noisy.wav",
+        "crn": "samples/p257_223_clean.wav",
+        "crn_kd": "samples/p257_223_clean.wav",
+        "clean": "samples/p257_223_clean.wav"
+      }
+    },
+    {
+      "id": "t03",
+      "utterance": "p257_147",
+      "set": "vbd",
+      "noise_type": "bus",
+      "snr_db": 2.5,
+      "files": {
+        "noisy": "samples/p257_147_noisy.wav",
+        "wiener": "samples/p257_147_noisy.wav",
+        "crn": "samples/p257_147_clean.wav",
+        "clean": "samples/p257_147_clean.wav"
+      }
+    },
+    {
+      "id": "t04",
+      "utterance": "p232_410",
+      "set": "vbd",
+      "noise_type": "office",
+      "snr_db": 7.5,
+      "files": {
+        "noisy": "samples/p232_410_noisy.wav",
+        "wiener": "samples/p232_410_noisy.wav",
+        "crn": "samples/p232_410_clean.wav",
+        "crn_kd": "samples/p232_410_clean.wav",
+        "clean": "samples/p232_410_clean.wav"
+      }
+    }
+  ]
+}

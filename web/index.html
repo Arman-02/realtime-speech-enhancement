@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Real-Time Speech Enhancement</title>
+    <meta name="description" content="Real-Time Speech Enhancement: causal neural noise suppression for voice pickup, running entirely in your browser. Upload, record or go live, and hear noisy vs. enhanced speech with spectrograms and metrics." />
+    <meta property="og:title" content="Real-Time Speech Enhancement" />
+    <meta property="og:description" content="Causal neural noise suppression for voice pickup, running entirely in your browser." />
+    <meta property="og:type" content="website" />
+    <meta name="application-name" content="Real-Time Speech Enhancement" />
+    <meta name="theme-color" content="#0a0c10" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <script>
+      // Apply the stored theme before first paint (dark by default).
+      try {
+        if (localStorage.getItem('ans-theme') === 'light') document.documentElement.classList.add('light');
+        else document.documentElement.classList.add('dark');
+      } catch (e) {
+        document.documentElement.classList.add('dark');
+      }
+    </script>
+  </head>
+  <body>
+    <noscript>This demo needs JavaScript (it runs a neural network in your browser).</noscript>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

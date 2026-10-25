@@ -1,0 +1,4 @@
+# R8: CRN-128 + KD (beta 1.0), seed 1 (seed variance).
+base: crn128_kd.yaml
+run_name: crn128_kd_seed1
+seed: 1

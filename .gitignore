@@ -1,0 +1,22 @@
+# data & artifacts
+/data/
+ml/checkpoints/
+ml/runs/
+ml/exports/
+*.zip
+
+# python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+
+# node
+node_modules/
+web/dist/
+
+# os / editor
+.DS_Store
+.vscode/
+.idea/

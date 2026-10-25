@@ -1,0 +1,248 @@
+{
+  "name": "crn-benchmark",
+  "version": "0.2.0",
+  "variant": "benchmark",
+  "trained": true,
+  "sample_rate": 16000,
+  "n_fft": 320,
+  "hop": 160,
+  "window": "sqrt_hann_periodic",
+  "lookahead_frames": 0,
+  "onnx": "ans_stream.onnx",
+  "inputs": {
+    "spec": [
+      1,
+      1,
+      161,
+      2
+    ],
+    "state_in": [
+      2,
+      1,
+      256
+    ],
+    "atten_lim_db": [
+      1
+    ]
+  },
+  "outputs": {
+    "spec_out": [
+      1,
+      1,
+      161,
+      2
+    ],
+    "state_out": [
+      2,
+      1,
+      256
+    ]
+  },
+  "state_shape": [
+    2,
+    1,
+    256
+  ],
+  "atten_lim_db": {
+    "default": 100,
+    "min": 0,
+    "max": 100
+  },
+  "params": 1214038,
+  "macs_per_frame": 1957456,
+  "budget": {
+    "weights_kb_fp32": 4742.3,
+    "weights_kb_int8": 3556.0,
+    "peak_activation_kb": 31.1,
+    "state_kb": 2.0,
+    "mmacs_per_s": 195.7,
+    "notes": "int8 keeps the GRU, biases and norms in fp32; peak activation is analytic (float32)",
+    "ms_per_frame_torch_cpu": 0.214,
+    "ms_per_frame_ort_fp32": 0.1461,
+    "file_kb_fp32": 4762.6,
+    "ms_per_frame_ort_int8_dynamic": 0.1233,
+    "file_kb_int8_dynamic": 3716.1,
+    "ms_per_frame_ort_int8_static": 0.1555,
+    "file_kb_int8_static": 3611.5
+  },
+  "training": {
+    "run": "crn_small",
+    "display_name": "CRN-256 (benchmark)",
+    "data": "VoiceBank+DEMAND (dynamic remixing)",
+    "distilled": false,
+    "epochs": 100,
+    "seed": 0,
+    "best_val": {
+      "pesq": 2.5244364488124846,
+      "stoi": 0.8671056205269312,
+      "si_sdr": 14.027260973868227
+    },
+    "git_hash": "uncommitted",
+    "exported_with": "uncommitted+23c45be2a628"
+  },
+  "metrics": {
+    "pesq": 2.7616,
+    "stoi": 0.9367,
+    "estoi": 0.845,
+    "si_sdr": 16.734
+  },
+  "quantization": {
+    "int8-dynamic": {
+      "Constant": {
+        "fp32": 26
+      },
+      "Gather": {
+        "fp32": 6
+      },
+      "Slice": {
+        "fp32": 2
+      },
+      "Mul": {
+        "fp32": 22
+      },
+      "Exp": {
+        "fp32": 1
+      },
+      "Add": {
+        "fp32": 9
+      },
+      "Cast": {
+        "fp32": 5
+      },
+      "Pow": {
+        "fp32": 2
+      },
+      "Unsqueeze": {
+        "fp32": 7
+      },
+      "Concat": {
+        "fp32": 8
+      },
+      "LayerNormalization": {
+        "fp32": 8
+      },
+      "Conv": {
+        "fp32": 4
+      },
+      "Transpose": {
+        "fp32": 18
+      },
+      "PRelu": {
+        "fp32": 9
+      },
+      "Reshape": {
+        "fp32": 2
+      },
+      "DynamicQuantizeLinear": {
+        "int8": 2
+      },
+      "MatMulInteger": {
+        "int8": 2
+      },
+      "GRU": {
+        "fp32": 2
+      },
+      "Squeeze": {
+        "fp32": 2
+      },
+      "ConvTranspose": {
+        "fp32": 4
+      },
+      "Sqrt": {
+        "fp32": 2
+      },
+      "Tanh": {
+        "fp32": 1
+      },
+      "Div": {
+        "fp32": 2
+      },
+      "Max": {
+        "fp32": 1
+      },
+      "Sub": {
+        "fp32": 1
+      }
+    },
+    "int8-static": {
+      "Mul": {
+        "fp32": 18
+      },
+      "DequantizeLinear": {
+        "quant": 40
+      },
+      "Gather": {
+        "fp32": 4,
+        "qdq": 2
+      },
+      "Slice": {
+        "fp32": 2
+      },
+      "Exp": {
+        "fp32": 1
+      },
+      "Add": {
+        "fp32": 7
+      },
+      "Pow": {
+        "fp32": 2
+      },
+      "Unsqueeze": {
+        "fp32": 7
+      },
+      "Concat": {
+        "fp32": 5,
+        "qdq": 3
+      },
+      "LayerNormalization": {
+        "fp32": 8
+      },
+      "QuantizeLinear": {
+        "quant": 20
+      },
+      "Conv": {
+        "qdq": 4
+      },
+      "Transpose": {
+        "qdq": 7,
+        "fp32": 9
+      },
+      "PRelu": {
+        "fp32": 9
+      },
+      "Reshape": {
+        "fp32": 3,
+        "qdq": 2
+      },
+      "Gemm": {
+        "qdq": 2
+      },
+      "GRU": {
+        "fp32": 2
+      },
+      "Squeeze": {
+        "fp32": 2
+      },
+      "ConvTranspose": {
+        "qdq": 4
+      },
+      "Sqrt": {
+        "fp32": 2
+      },
+      "Tanh": {
+        "fp32": 1
+      },
+      "Div": {
+        "fp32": 2
+      },
+      "Max": {
+        "fp32": 1
+      },
+      "Sub": {
+        "fp32": 1
+      }
+    }
+  },
+  "onnx_int8": "ans_stream_int8.onnx",
+  "int8_variant": "int8-dynamic"
+}

@@ -1,0 +1,6 @@
+# R3: CRN-128 plain (Pareto, plain arm). Same as the running `crn_small.yaml model.kwargs.hidden=128`.
+base: crn_small.yaml
+run_name: crn128
+model:
+  kwargs:
+    hidden: 128

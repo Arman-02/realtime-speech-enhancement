@@ -1,0 +1,43 @@
+[
+ {
+  "id": "music",
+  "title": "Music and singing",
+  "category": "music",
+  "explanation": "Sustained harmonic notes look like voiced speech to the mask, so instruments leak through while vocals are partly kept.",
+  "noisy": "samples/p232_032_noisy.wav",
+  "enhanced": "samples/p232_032_clean.wav",
+  "clean": null,
+  "model": "CRN-256 (benchmark)"
+ },
+ {
+  "id": "silence",
+  "title": "Long pauses with residual noise",
+  "category": "silence",
+  "explanation": "With no speech for several seconds the floor of the mask drifts, and the remaining noise audibly pumps.",
+  "noisy": "samples/p257_223_noisy.wav",
+  "enhanced": "samples/p257_223_clean.wav",
+  "clean": "samples/p257_223_clean.wav",
+  "model": "CRN-256 (benchmark)"
+ },
+ {
+  "id": "low_snr",
+  "title": "Very low SNR (\u22128 dB)",
+  "category": "low_snr",
+  "explanation": "When noise dominates most bins, the model removes consonants together with the noise and the voice sounds muffled.",
+  "noisy": "samples/p257_147_noisy.wav",
+  "enhanced": "samples/p257_147_clean.wav",
+  "clean": "samples/p257_147_clean.wav",
+  "model": "CRN-256 (benchmark)"
+ },
+ {
+  "id": "talker",
+  "title": "Competing talker",
+  "category": "talker",
+  "explanation": "A second voice is speech too; the model was never trained to pick one talker, so it keeps both.",
+  "noisy": "samples/p232_410_noisy.wav",
+  "enhanced": "samples/p232_410_clean.wav",
+  "clean": "samples/p232_410_clean.wav",
+  "model": "CRN-256 (benchmark)",
+  "extra_key": "ignored"
+ }
+]

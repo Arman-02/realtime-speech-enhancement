@@ -1,0 +1,8 @@
+# R1: distillation teacher (PLAN.md §4.9): same CRN topology, bidirectional GRU, hidden 512, non-causal.
+base: crn_small.yaml
+run_name: teacher_bigru512
+model:
+  name: crn_teacher
+  kwargs:
+    hidden: 512
+    bidirectional: true

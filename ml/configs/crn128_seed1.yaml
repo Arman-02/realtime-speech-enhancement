@@ -1,0 +1,4 @@
+# R7: CRN-128 plain, seed 1 (seed variance).
+base: crn128.yaml
+run_name: crn128_seed1
+seed: 1

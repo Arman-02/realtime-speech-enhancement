@@ -1,0 +1,14 @@
+Failure-case gallery: source audio and licences
+
+The "noisy" clips are mixtures built from the sources below. The "enhanced" clips are those mixtures processed by the model, which makes them derivative works under the same licences.
+
+Speech
+- VoiceBank+DEMAND test set: C. Valentini-Botinhao, "Noisy speech database for training speech enhancement algorithms and TTS models", University of Edinburgh, 2017. https://doi.org/10.7488/ds/2117. CC BY 4.0.
+- LibriSpeech test-clean (interfering talkers): V. Panayotov et al., 2015. https://www.openslr.org/12. CC BY 4.0.
+
+Music (from the MUSAN corpus, D. Snyder, G. Chen, D. Povey, 2015, https://www.openslr.org/17)
+- music-fma-0063: "Riding Music" by J Mano, from Life Rhymes / Showtime EP. CC BY-SA 4.0. https://freemusicarchive.org/music/J_Mano/Life_Rhymes_Showtime_EP
+- music-jamendo-0005: "Minor Major" by AFTER WORK. CC BY-SA 3.0.
+  Clips derived from these tracks (music_vocals_*, music_instrumental_*, music_speech_bg_*) are excerpts or remixes and are shared under the same CC BY-SA licence.
+
+Reverberation uses simulated room impulse responses (pyroomacoustics), so it involves no third-party audio.

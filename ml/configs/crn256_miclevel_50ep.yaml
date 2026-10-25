@@ -1,0 +1,9 @@
+# R14: augmentation ablation, CRN-256 50 epochs + mic/channel coloration (input only) + extended level range.
+base: crn_small.yaml
+run_name: crn256_miclevel_50ep
+schedule:
+  epochs: 50
+data:
+  augment:
+    mic: {prob: 0.5}
+    level: {prob: 0.5, dbfs: [-45.0, -3.0]}

@@ -1,0 +1,2403 @@
+{
+ "_fixture": "FAKE NUMBERS for UI development and tests only; never deploy as real data.",
+ "generated_at": "2026-10-20T12:00:00+00:00",
+ "git_hash": "fixture0",
+ "test_sets": {
+  "vbd": {
+   "label": "VoiceBank+DEMAND test (824)",
+   "intrusive": true,
+   "noise_seen_in_training": false
+  },
+  "ood_esc": {
+   "label": "VB-D speech + ESC-50 noise (500)",
+   "intrusive": true,
+   "noise_seen_in_training": false
+  },
+  "talker": {
+   "label": "Competing talker (300)",
+   "intrusive": true,
+   "noise_seen_in_training": false
+  },
+  "real": {
+   "label": "Real recordings (24)",
+   "intrusive": false
+  }
+ },
+ "rows": [
+  {
+   "model": "Noisy (unprocessed)",
+   "set": "vbd",
+   "family": "baseline",
+   "causal": true,
+   "distilled": false,
+   "pesq": {
+    "mean": 1.97,
+    "ci95": 0.0432,
+    "n": 824
+   },
+   "stoi": 0.921,
+   "estoi": 0.787,
+   "si_sdr": {
+    "mean": 8.45,
+    "ci95": 0.3,
+    "n": 824
+   },
+   "speech_distortion_sisdr": null,
+   "noise_reduction_db": null,
+   "dnsmos_sig": 3.35,
+   "dnsmos_bak": 2.9,
+   "dnsmos_ovrl": {
+    "mean": 2.48,
+    "ci95": 0.03,
+    "n": 824
+   },
+   "params": null,
+   "macs_per_frame": null,
+   "ms_per_frame_cpu": null,
+   "rtf": null,
+   "notes": "unknown keys must be ignored"
+  },
+  {
+   "model": "Wiener (min. statistics)",
+   "set": "vbd",
+   "family": "baseline",
+   "causal": true,
+   "distilled": false,
+   "pesq": {
+    "mean": 2.2,
+    "ci95": 0.0415,
+    "n": 824
+   },
+   "stoi": 0.9256,
+   "estoi": 0.8008,
+   "si_sdr": {
+    "mean": 10.52,
+    "ci95": 0.3,
+    "n": 824
+   },
+   "speech_distortion_sisdr": 23.43,
+   "noise_reduction_db": 6.53,
+   "dnsmos_sig": 3.389,
+   "dnsmos_bak": 3.108,
+   "dnsmos_ovrl": {
+    "mean": 2.61,
+    "ci95": 0.03,
+    "n": 824
+   },
+   "params": 0,
+   "macs_per_frame": null,
+   "ms_per_frame_cpu": 0.021,
+   "rtf": 0.0021,
+   "notes": "unknown keys must be ignored"
+  },
+  {
+   "model": "CRN-64",
+   "set": "vbd",
+   "family": "ours",
+   "causal": true,
+   "distilled": false,
+   "pesq": {
+    "mean": 2.52,
+    "ci95": 0.0465,
+    "n": 824
+   },
+   "stoi": 0.932,
+   "estoi": 0.82,
+   "si_sdr": {
+    "mean": 13.4,
+    "ci95": 0.3,
+    "n": 824
+   },
+   "speech_distortion_sisdr": 22.62,
+   "noise_reduction_db": 10.05,
+   "dnsmos_sig": 3.479,
+   "dnsmos_bak": 3.588,
+   "dnsmos_ovrl": {
+    "mean": 2.91,
+    "ci95": 0.03,
+    "n": 824
+   },
+   "params": 268000,
+   "macs_per_frame": 312000,
+   "ms_per_frame_cpu": 0.071,
+   "rtf": 0.0071,
+   "notes": "unknown keys must be ignored"
+  },
+  {
+   "model": "CRN-64 (KD)",
+   "set": "vbd",
+   "family": "ours",
+   "causal": true,
+   "distilled": true,
+   "pesq": {
+    "mean": 2.63,
+    "ci95": 0.0407,
+    "n": 824
+   },
+   "stoi": 0.9342,
+   "estoi": 0.8266,
+   "si_sdr": {
+    "mean": 14.39,
+    "ci95": 0.3,
+    "n": 824
+   },
+   "speech_distortion_sisdr": 22.35,
+   "noise_reduction_db": 11.26,
+   "dnsmos_sig": 3.5,
+   "dnsmos_bak": 3.7,
+   "dnsmos_ovrl": {
+    "mean": 2.98,
+    "ci95": 0.03,
+    "n": 824
+   },
+   "params": 268000,
+   "macs_per_frame": 312000,
+   "ms_per_frame_cpu": 0.071,
+   "rtf": 0.0071,
+   "notes": "unknown keys must be ignored"
+  },
+  {
+   "model": "CRN-128",
+   "set": "vbd",
+   "family": "ours",
+   "causal": true,
+   "distilled": false,
+   "pesq": {
+    "mean": 2.66,
+    "ci95": 0.0454,
+    "n": 824
+   },
+   "stoi": 0.9348,
+   "estoi": 0.8284,
+   "si_sdr": {
+    "mean": 14.66,
+    "ci95": 0.3,
+    "n": 824
+   },
+   "speech_distortion_sisdr": 22.27,
+   "noise_reduction_db": 11.59,
+   "dnsmos_sig": 3.506,
+   "dnsmos_bak": 3.732,
+   "dnsmos_ovrl": {
+    "mean": 3.0,
+    "ci95": 0.03,
+    "n": 824
+   },
+   "params": 520000,
+   "macs_per_frame": 760000,
+   "ms_per_frame_cpu": 0.118,
+   "rtf": 0.0118,
+   "notes": "unknown keys must be ignored"
+  },
+  {
+   "model": "CRN-128 (KD)",
+   "set": "vbd",
+   "family": "ours",
+   "causal": true,
+   "distilled": true,
+   "pesq": {
+    "mean": 2.75,
+    "ci95": 0.0437,
+    "n": 824
+   },
+   "stoi": 0.9366,
+   "estoi": 0.8338,
+   "si_sdr": {
+    "mean": 15.47,
+    "ci95": 0.3,
+    "n": 824
+   },
+   "speech_distortion_sisdr": 22.05,
+   "noise_reduction_db": 12.58,
+   "dnsmos_sig": 3.524,
+   "dnsmos_bak": 3.828,
+   "dnsmos_ovrl": {
+    "mean": 3.06,
+    "ci95": 0.03,
+    "n": 824
+   },
+   "params": 520000,
+   "macs_per_frame": 760000,
+   "ms_per_frame_cpu": 0.118,
+   "rtf": 0.0118,
+   "notes": "unknown keys must be ignored"
+  },
+  {
+   "model": "CRN-256",
+   "set": "vbd",
+   "family": "ours",
+   "causal": true,
+   "distilled": false,
+   "pesq": {
+    "mean": 2.76,
+    "ci95": 0.0406,
+    "n": 824
+   },
+   "stoi": 0.9368,
+   "estoi": 0.8344,
+   "si_sdr": {
+    "mean": 15.56,
+    "ci95": 0.3,
+    "n": 824
+   },
+   "speech_distortion_sisdr": 22.02,
+   "noise_reduction_db": 12.69,
+   "dnsmos_sig": 3.527,
+   "dnsmos_bak": 3.844,
+   "dnsmos_ovrl": {
+    "mean": 3.07,
+    "ci95": 0.03,
+    "n": 824
+   },
+   "params": 1214038,
+   "macs_per_frame": 1957456,
+   "ms_per_frame_cpu": 0.209,
+   "rtf": 0.0209,
+   "notes": "unknown keys must be ignored"
+  },
+  {
+   "model": "CRN-256 (KD)",
+   "set": "vbd",
+   "family": "ours",
+   "causal": true,
+   "distilled": true,
+   "pesq": {
+    "mean": 2.79,
+    "ci95": 0.0451,
+    "n": 824
+   },
+   "stoi": 0.9374,
+   "estoi": 0.8362,
+   "si_sdr": {
+    "mean": 15.83,
+    "ci95": 0.3,
+    "n": 824
+   },
+   "speech_distortion_sisdr": 21.95,
+   "noise_reduction_db": 13.02,
+   "dnsmos_sig": 3.533,
+   "dnsmos_bak": 3.876,
+   "dnsmos_ovrl": {
+    "mean": 3.09,
+    "ci95": 0.03,
+    "n": 824
+   },
+   "params": 1214038,
+   "macs_per_frame": 1957456,
+   "ms_per_frame_cpu": 0.209,
+   "rtf": 0.0209,
+   "notes": "unknown keys must be ignored"
+  },
+  {
+   "model": "Teacher (bi-GRU 512, non-causal)",
+   "set": "vbd",
+   "family": "teacher",
+   "causal": false,
+   "distilled": false,
+   "pesq": {
+    "mean": 3.02,
+    "ci95": 0.0404,
+    "n": 824
+   },
+   "stoi": 0.942,
+   "estoi": 0.85,
+   "si_sdr": {
+    "mean": 17.9,
+    "ci95": 0.3,
+    "n": 824
+   },
+   "speech_distortion_sisdr": 21.38,
+   "noise_reduction_db": 15.55,
+   "dnsmos_sig": 3.569,
+   "dnsmos_bak": 4.068,
+   "dnsmos_ovrl": {
+    "mean": 3.21,
+    "ci95": 0.03,
+    "n": 824
+   },
+   "params": 6100000,
+   "macs_per_frame": 9800000,
+   "ms_per_frame_cpu": 0.95,
+   "rtf": 0.095,
+   "notes": "unknown keys must be ignored"
+  },
+  {
+   "model": "RNNoise",
+   "set": "vbd",
+   "family": "reference",
+   "causal": true,
+   "distilled": false,
+   "pesq": {
+    "mean": 2.29,
+    "ci95": 0.0443,
+    "n": 824
+   },
+   "stoi": 0.9274,
+   "estoi": 0.8062,
+   "si_sdr": {
+    "mean": 11.33,
+    "ci95": 0.3,
+    "n": 824
+   },
+   "speech_distortion_sisdr": null,
+   "noise_reduction_db": null,
+   "dnsmos_sig": 3.455,
+   "dnsmos_bak": 3.46,
+   "dnsmos_ovrl": {
+    "mean": 2.83,
+    "ci95": 0.03,
+    "n": 824
+   },
+   "params": 88000,
+   "macs_per_frame": 40000,
+   "ms_per_frame_cpu": 0.03,
+   "rtf": 0.003,
+   "notes": "unknown keys must be ignored"
+  },
+  {
+   "model": "DeepFilterNet3",
+   "set": "vbd",
+   "family": "reference",
+   "causal": true,
+   "distilled": false,
+   "pesq": {
+    "mean": 3.11,
+    "ci95": 0.0407,
+    "n": 824
+   },
+   "stoi": 0.9438,
+   "estoi": 0.8554,
+   "si_sdr": {
+    "mean": 18.71,
+    "ci95": 0.3,
+    "n": 824
+   },
+   "speech_distortion_sisdr": null,
+   "noise_reduction_db": null,
+   "dnsmos_sig": 3.59,
+   "dnsmos_bak": 4.18,
+   "dnsmos_ovrl": {
+    "mean": 3.28,
+    "ci95": 0.03,
+    "n": 824
+   },
+   "params": 2130000,
+   "macs_per_frame": 3500000,
+   "ms_per_frame_cpu": 0.62,
+   "rtf": 0.062,
+   "notes": "unknown keys must be ignored"
+  },
+  {
+   "model": "Noisy (unprocessed)",
+   "set": "ood_esc",
+   "family": "baseline",
+   "causal": true,
+   "distilled": false,
+   "pesq": {
+    "mean": 1.718,
+    "ci95": 0.0409,
+    "n": 500
+   },
+   "stoi": 0.9,
+   "estoi": 0.7534,
+   "si_sdr": {
+    "mean": 6.77,
+    "ci95": 0.3,
+    "n": 500
+   },
+   "speech_distortion_sisdr": null,
+   "noise_reduction_db": null,
+   "dnsmos_sig": 3.308,
+   "dnsmos_bak": 2.816,
+   "dnsmos_ovrl": {
+    "mean": 2.375,
+    "ci95": 0.03,
+    "n": 500
+   },
+   "params": null,
+   "macs_per_frame": null,
+   "ms_per_frame_cpu": null,
+   "rtf": null,
+   "notes": "unknown keys must be ignored"
+  },
+  {
+   "model": "Wiener (min. statistics)",
+   "set": "ood_esc",
+   "family": "baseline",
+   "causal": true,
+   "distilled": false,
+   "pesq": {
+    "mean": 1.9135,
+    "ci95": 0.0442,
+    "n": 500
+   },
+   "stoi": 0.9046,
+   "estoi": 0.7672,
+   "si_sdr": {
+    "mean": 8.84,
+    "ci95": 0.3,
+    "n": 500
+   },
+   "speech_distortion_sisdr": 22.16,
+   "noise_reduction_db": 5.69,
+   "dnsmos_sig": 3.347,
+   "dnsmos_bak": 3.024,
+   "dnsmos_ovrl": {
+    "mean": 2.505,
+    "ci95": 0.03,
+    "n": 500
+   },
+   "params": 0,
+   "macs_per_frame": null,
+   "ms_per_frame_cpu": 0.021,
+   "rtf": 0.0021,
+   "notes": "unknown keys must be ignored"
+  },
+  {
+   "model": "CRN-64",
+   "set": "ood_esc",
+   "family": "ours",
+   "causal": true,
+   "distilled": false,
+   "pesq": {
+    "mean": 2.1855,
+    "ci95": 0.0483,
+    "n": 500
+   },
+   "stoi": 0.911,
+   "estoi": 0.7864,
+   "si_sdr": {
+    "mean": 11.72,
+    "ci95": 0.3,
+    "n": 500
+   },
+   "speech_distortion_sisdr": 21.36,
+   "noise_reduction_db": 9.21,
+   "dnsmos_sig": 3.437,
+   "dnsmos_bak": 3.504,
+   "dnsmos_ovrl": {
+    "mean": 2.805,
+    "ci95": 0.03,
+    "n": 500
+   },
+   "params": 268000,
+   "macs_per_frame": 312000,
+   "ms_per_frame_cpu": 0.071,
+   "rtf": 0.0071,
+   "notes": "unknown keys must be ignored"
+  },
+  {
+   "model": "CRN-64 (KD)",
+   "set": "ood_esc",
+   "family": "ours",
+   "causal": true,
+   "distilled": true,
+   "pesq": {
+    "mean": 2.329,
+    "ci95": 0.0412,
+    "n": 500
+   },
+   "stoi": 0.9132,
+   "estoi": 0.793,
+   "si_sdr": {
+    "mean": 12.71,
+    "ci95": 0.3,
+    "n": 500
+   },
+   "speech_distortion_sisdr": 21.09,
+   "noise_reduction_db": 10.42,
+   "dnsmos_sig": 3.458,
+   "dnsmos_bak": 3.616,
+   "dnsmos_ovrl": {
+    "mean": 2.875,
+    "ci95": 0.03,
+    "n": 500
+   },
+   "params": 268000,
+   "macs_per_frame": 312000,
+   "ms_per_frame_cpu": 0.071,
+   "rtf": 0.0071,
+   "notes": "unknown keys must be ignored"
+  },
+  {
+   "model": "CRN-128",
+   "set": "ood_esc",
+   "family": "ours",
+   "causal": true,
+   "distilled": false,
+   "pesq": {
+    "mean": 2.3045,
+    "ci95": 0.0422,
+    "n": 500
+   },
+   "stoi": 0.9138,
+   "estoi": 0.7948,
+   "si_sdr": {
+    "mean": 12.98,
+    "ci95": 0.3,
+    "n": 500
+   },
+   "speech_distortion_sisdr": 21.01,
+   "noise_reduction_db": 10.75,
+   "dnsmos_sig": 3.464,
+   "dnsmos_bak": 3.648,
+   "dnsmos_ovrl": {
+    "mean": 2.895,
+    "ci95": 0.03,
+    "n": 500
+   },
+   "params": 520000,
+   "macs_per_frame": 760000,
+   "ms_per_frame_cpu": 0.118,
+   "rtf": 0.0118,
+   "notes": "unknown keys must be ignored"
+  },
+  {
+   "model": "CRN-128 (KD)",
+   "set": "ood_esc",
+   "family": "ours",
+   "causal": true,
+   "distilled": true,
+   "pesq": {
+    "mean": 2.431,
+    "ci95": 0.0463,
+    "n": 500
+   },
+   "stoi": 0.9156,
+   "estoi": 0.8002,
+   "si_sdr": {
+    "mean": 13.79,
+    "ci95": 0.3,
+    "n": 500
+   },
+   "speech_distortion_sisdr": 20.79,
+   "noise_reduction_db": 11.74,
+   "dnsmos_sig": 3.482,
+   "dnsmos_bak": 3.744,
+   "dnsmos_ovrl": {
+    "mean": 2.955,
+    "ci95": 0.03,
+    "n": 500
+   },
+   "params": 520000,
+   "macs_per_frame": 760000,
+   "ms_per_frame_cpu": 0.118,
+   "rtf": 0.0118,
+   "notes": "unknown keys must be ignored"
+  },
+  {
+   "model": "CRN-256",
+   "set": "ood_esc",
+   "family": "ours",
+   "causal": true,
+   "distilled": false,
+   "pesq": {
+    "mean": 2.3895,
+    "ci95": 0.0495,
+    "n": 500
+   },
+   "stoi": 0.9158,
+   "estoi": 0.8008,
+   "si_sdr": {
+    "mean": 13.88,
+    "ci95": 0.3,
+    "n": 500
+   },
+   "speech_distortion_sisdr": 20.76,
+   "noise_reduction_db": 11.85,
+   "dnsmos_sig": 3.485,
+   "dnsmos_bak": 3.76,
+   "dnsmos_ovrl": {
+    "mean": 2.965,
+    "ci95": 0.03,
+    "n": 500
+   },
+   "params": 1214038,
+   "macs_per_frame": 1957456,
+   "ms_per_frame_cpu": 0.209,
+   "rtf": 0.0209,
+   "notes": "unknown keys must be ignored"
+  },
+  {
+   "model": "CRN-256 (KD)",
+   "set": "ood_esc",
+   "family": "ours",
+   "causal": true,
+   "distilled": true,
+   "pesq": {
+    "mean": 2.465,
+    "ci95": 0.0458,
+    "n": 500
+   },
+   "stoi": 0.9164,
+   "estoi": 0.8026,
+   "si_sdr": {
+    "mean": 14.15,
+    "ci95": 0.3,
+    "n": 500
+   },
+   "speech_distortion_sisdr": 20.69,
+   "noise_reduction_db": 12.18,
+   "dnsmos_sig": 3.491,
+   "dnsmos_bak": 3.792,
+   "dnsmos_ovrl": {
+    "mean": 2.985,
+    "ci95": 0.03,
+    "n": 500
+   },
+   "params": 1214038,
+   "macs_per_frame": 1957456,
+   "ms_per_frame_cpu": 0.209,
+   "rtf": 0.0209,
+   "notes": "unknown keys must be ignored"
+  },
+  {
+   "model": "Teacher (bi-GRU 512, non-causal)",
+   "set": "ood_esc",
+   "family": "teacher",
+   "causal": false,
+   "distilled": false,
+   "pesq": {
+    "mean": 2.6105,
+    "ci95": 0.044,
+    "n": 500
+   },
+   "stoi": 0.921,
+   "estoi": 0.8164,
+   "si_sdr": {
+    "mean": 16.22,
+    "ci95": 0.3,
+    "n": 500
+   },
+   "speech_distortion_sisdr": 20.11,
+   "noise_reduction_db": 14.71,
+   "dnsmos_sig": 3.527,
+   "dnsmos_bak": 3.984,
+   "dnsmos_ovrl": {
+    "mean": 3.105,
+    "ci95": 0.03,
+    "n": 500
+   },
+   "params": 6100000,
+   "macs_per_frame": 9800000,
+   "ms_per_frame_cpu": 0.95,
+   "rtf": 0.095,
+   "notes": "unknown keys must be ignored"
+  },
+  {
+   "model": "RNNoise",
+   "set": "ood_esc",
+   "family": "reference",
+   "causal": true,
+   "distilled": false,
+   "pesq": {
+    "mean": 1.99,
+    "ci95": 0.0498,
+    "n": 500
+   },
+   "stoi": 0.9064,
+   "estoi": 0.7726,
+   "si_sdr": {
+    "mean": 9.65,
+    "ci95": 0.3,
+    "n": 500
+   },
+   "speech_distortion_sisdr": null,
+   "noise_reduction_db": null,
+   "dnsmos_sig": 3.413,
+   "dnsmos_bak": 3.376,
+   "dnsmos_ovrl": {
+    "mean": 2.725,
+    "ci95": 0.03,
+    "n": 500
+   },
+   "params": 88000,
+   "macs_per_frame": 40000,
+   "ms_per_frame_cpu": 0.03,
+   "rtf": 0.003,
+   "notes": "unknown keys must be ignored"
+  },
+  {
+   "model": "DeepFilterNet3",
+   "set": "ood_esc",
+   "family": "reference",
+   "causal": true,
+   "distilled": false,
+   "pesq": {
+    "mean": 2.687,
+    "ci95": 0.0405,
+    "n": 500
+   },
+   "stoi": 0.9228,
+   "estoi": 0.8218,
+   "si_sdr": {
+    "mean": 17.03,
+    "ci95": 0.3,
+    "n": 500
+   },
+   "speech_distortion_sisdr": null,
+   "noise_reduction_db": null,
+   "dnsmos_sig": 3.548,
+   "dnsmos_bak": 4.096,
+   "dnsmos_ovrl": {
+    "mean": 3.175,
+    "ci95": 0.03,
+    "n": 500
+   },
+   "params": 2130000,
+   "macs_per_frame": 3500000,
+   "ms_per_frame_cpu": 0.62,
+   "rtf": 0.062,
+   "notes": "unknown keys must be ignored"
+  },
+  {
+   "model": "Noisy (unprocessed)",
+   "set": "talker",
+   "family": "baseline",
+   "causal": true,
+   "distilled": false,
+   "pesq": {
+    "mean": 1.64,
+    "ci95": 0.0486,
+    "n": 300
+   },
+   "stoi": 0.8935,
+   "estoi": 0.743,
+   "si_sdr": {
+    "mean": 6.25,
+    "ci95": 0.3,
+    "n": 300
+   },
+   "speech_distortion_sisdr": null,
+   "noise_reduction_db": null,
+   "dnsmos_sig": 3.295,
+   "dnsmos_bak": 2.79,
+   "dnsmos_ovrl": {
+    "mean": 2.3425,
+    "ci95": 0.03,
+    "n": 300
+   },
+   "params": null,
+   "macs_per_frame": null,
+   "ms_per_frame_cpu": null,
+   "rtf": null,
+   "notes": "unknown keys must be ignored"
+  },
+  {
+   "model": "Wiener (min. statistics)",
+   "set": "talker",
+   "family": "baseline",
+   "causal": true,
+   "distilled": false,
+   "pesq": {
+    "mean": 1.8355,
+    "ci95": 0.0429,
+    "n": 300
+   },
+   "stoi": 0.8981,
+   "estoi": 0.7568,
+   "si_sdr": {
+    "mean": 8.32,
+    "ci95": 0.3,
+    "n": 300
+   },
+   "speech_distortion_sisdr": 21.78,
+   "noise_reduction_db": 5.43,
+   "dnsmos_sig": 3.334,
+   "dnsmos_bak": 2.998,
+   "dnsmos_ovrl": {
+    "mean": 2.4725,
+    "ci95": 0.03,
+    "n": 300
+   },
+   "params": 0,
+   "macs_per_frame": null,
+   "ms_per_frame_cpu": 0.021,
+   "rtf": 0.0021,
+   "notes": "unknown keys must be ignored"
+  },
+  {
+   "model": "CRN-64",
+   "set": "talker",
+   "family": "ours",
+   "causal": true,
+   "distilled": false,
+   "pesq": {
+    "mean": 2.1075,
+    "ci95": 0.0414,
+    "n": 300
+   },
+   "stoi": 0.9045,
+   "estoi": 0.776,
+   "si_sdr": {
+    "mean": 11.2,
+    "ci95": 0.3,
+    "n": 300
+   },
+   "speech_distortion_sisdr": 20.98,
+   "noise_reduction_db": 8.95,
+   "dnsmos_sig": 3.424,
+   "dnsmos_bak": 3.478,
+   "dnsmos_ovrl": {
+    "mean": 2.7725,
+    "ci95": 0.03,
+    "n": 300
+   },
+   "params": 268000,
+   "macs_per_frame": 312000,
+   "ms_per_frame_cpu": 0.071,
+   "rtf": 0.0071,
+   "notes": "unknown keys must be ignored"
+  },
+  {
+   "model": "CRN-64 (KD)",
+   "set": "talker",
+   "family": "ours",
+   "causal": true,
+   "distilled": true,
+   "pesq": {
+    "mean": 2.251,
+    "ci95": 0.0412,
+    "n": 300
+   },
+   "stoi": 0.9067,
+   "estoi": 0.7826,
+   "si_sdr": {
+    "mean": 12.19,
+    "ci95": 0.3,
+    "n": 300
+   },
+   "speech_distortion_sisdr": 20.7,
+   "noise_reduction_db": 10.16,
+   "dnsmos_sig": 3.445,
+   "dnsmos_bak": 3.59,
+   "dnsmos_ovrl": {
+    "mean": 2.8425,
+    "ci95": 0.03,
+    "n": 300
+   },
+   "params": 268000,
+   "macs_per_frame": 312000,
+   "ms_per_frame_cpu": 0.071,
+   "rtf": 0.0071,
+   "notes": "unknown keys must be ignored"
+  },
+  {
+   "model": "CRN-128",
+   "set": "talker",
+   "family": "ours",
+   "causal": true,
+   "distilled": false,
+   "pesq": {
+    "mean": 2.2265,
+    "ci95": 0.0431,
+    "n": 300
+   },
+   "stoi": 0.9073,
+   "estoi": 0.7844,
+   "si_sdr": {
+    "mean": 12.46,
+    "ci95": 0.3,
+    "n": 300
+   },
+   "speech_distortion_sisdr": 20.62,
+   "noise_reduction_db": 10.49,
+   "dnsmos_sig": 3.451,
+   "dnsmos_bak": 3.622,
+   "dnsmos_ovrl": {
+    "mean": 2.8625,
+    "ci95": 0.03,
+    "n": 300
+   },
+   "params": 520000,
+   "macs_per_frame": 760000,
+   "ms_per_frame_cpu": 0.118,
+   "rtf": 0.0118,
+   "notes": "unknown keys must be ignored"
+  },
+  {
+   "model": "CRN-128 (KD)",
+   "set": "talker",
+   "family": "ours",
+   "causal": true,
+   "distilled": true,
+   "pesq": {
+    "mean": 2.353,
+    "ci95": 0.0482,
+    "n": 300
+   },
+   "stoi": 0.9091,
+   "estoi": 0.7898,
+   "si_sdr": {
+    "mean": 13.27,
+    "ci95": 0.3,
+    "n": 300
+   },
+   "speech_distortion_sisdr": 20.4,
+   "noise_reduction_db": 11.48,
+   "dnsmos_sig": 3.469,
+   "dnsmos_bak": 3.718,
+   "dnsmos_ovrl": {
+    "mean": 2.9225,
+    "ci95": 0.03,
+    "n": 300
+   },
+   "params": 520000,
+   "macs_per_frame": 760000,
+   "ms_per_frame_cpu": 0.118,
+   "rtf": 0.0118,
+   "notes": "unknown keys must be ignored"
+  },
+  {
+   "model": "CRN-256",
+   "set": "talker",
+   "family": "ours",
+   "causal": true,
+   "distilled": false,
+   "pesq": {
+    "mean": 2.3115,
+    "ci95": 0.0418,
+    "n": 300
+   },
+   "stoi": 0.9093,
+   "estoi": 0.7904,
+   "si_sdr": {
+    "mean": 13.36,
+    "ci95": 0.3,
+    "n": 300
+   },
+   "speech_distortion_sisdr": 20.38,
+   "noise_reduction_db": 11.59,
+   "dnsmos_sig": 3.472,
+   "dnsmos_bak": 3.734,
+   "dnsmos_ovrl": {
+    "mean": 2.9325,
+    "ci95": 0.03,
+    "n": 300
+   },
+   "params": 1214038,
+   "macs_per_frame": 1957456,
+   "ms_per_frame_cpu": 0.209,
+   "rtf": 0.0209,
+   "notes": "unknown keys must be ignored"
+  },
+  {
+   "model": "CRN-256 (KD)",
+   "set": "talker",
+   "family": "ours",
+   "causal": true,
+   "distilled": true,
+   "pesq": {
+    "mean": 2.387,
+    "ci95": 0.0458,
+    "n": 300
+   },
+   "stoi": 0.9099,
+   "estoi": 0.7922,
+   "si_sdr": {
+    "mean": 13.63,
+    "ci95": 0.3,
+    "n": 300
+   },
+   "speech_distortion_sisdr": 20.3,
+   "noise_reduction_db": 11.92,
+   "dnsmos_sig": 3.478,
+   "dnsmos_bak": 3.766,
+   "dnsmos_ovrl": {
+    "mean": 2.9525,
+    "ci95": 0.03,
+    "n": 300
+   },
+   "params": 1214038,
+   "macs_per_frame": 1957456,
+   "ms_per_frame_cpu": 0.209,
+   "rtf": 0.0209,
+   "notes": "unknown keys must be ignored"
+  },
+  {
+   "model": "Teacher (bi-GRU 512, non-causal)",
+   "set": "talker",
+   "family": "teacher",
+   "causal": false,
+   "distilled": false,
+   "pesq": {
+    "mean": 2.5325,
+    "ci95": 0.0464,
+    "n": 300
+   },
+   "stoi": 0.9145,
+   "estoi": 0.806,
+   "si_sdr": {
+    "mean": 15.7,
+    "ci95": 0.3,
+    "n": 300
+   },
+   "speech_distortion_sisdr": 19.73,
+   "noise_reduction_db": 14.45,
+   "dnsmos_sig": 3.514,
+   "dnsmos_bak": 3.958,
+   "dnsmos_ovrl": {
+    "mean": 3.0725,
+    "ci95": 0.03,
+    "n": 300
+   },
+   "params": 6100000,
+   "macs_per_frame": 9800000,
+   "ms_per_frame_cpu": 0.95,
+   "rtf": 0.095,
+   "notes": "unknown keys must be ignored"
+  },
+  {
+   "model": "RNNoise",
+   "set": "talker",
+   "family": "reference",
+   "causal": true,
+   "distilled": false,
+   "pesq": {
+    "mean": 1.912,
+    "ci95": 0.0437,
+    "n": 300
+   },
+   "stoi": 0.8999,
+   "estoi": 0.7622,
+   "si_sdr": {
+    "mean": 9.13,
+    "ci95": 0.3,
+    "n": 300
+   },
+   "speech_distortion_sisdr": null,
+   "noise_reduction_db": null,
+   "dnsmos_sig": 3.4,
+   "dnsmos_bak": 3.35,
+   "dnsmos_ovrl": {
+    "mean": 2.6925,
+    "ci95": 0.03,
+    "n": 300
+   },
+   "params": 88000,
+   "macs_per_frame": 40000,
+   "ms_per_frame_cpu": 0.03,
+   "rtf": 0.003,
+   "notes": "unknown keys must be ignored"
+  },
+  {
+   "model": "DeepFilterNet3",
+   "set": "talker",
+   "family": "reference",
+   "causal": true,
+   "distilled": false,
+   "pesq": {
+    "mean": 2.609,
+    "ci95": 0.0455,
+    "n": 300
+   },
+   "stoi": 0.9163,
+   "estoi": 0.8114,
+   "si_sdr": {
+    "mean": 16.51,
+    "ci95": 0.3,
+    "n": 300
+   },
+   "speech_distortion_sisdr": null,
+   "noise_reduction_db": null,
+   "dnsmos_sig": 3.535,
+   "dnsmos_bak": 4.07,
+   "dnsmos_ovrl": {
+    "mean": 3.1425,
+    "ci95": 0.03,
+    "n": 300
+   },
+   "params": 2130000,
+   "macs_per_frame": 3500000,
+   "ms_per_frame_cpu": 0.62,
+   "rtf": 0.062,
+   "notes": "unknown keys must be ignored"
+  },
+  {
+   "model": "Noisy (unprocessed)",
+   "set": "real",
+   "family": "baseline",
+   "causal": true,
+   "distilled": false,
+   "dnsmos_sig": 3.32,
+   "dnsmos_bak": 2.84,
+   "dnsmos_ovrl": {
+    "mean": 2.405,
+    "ci95": 0.03,
+    "n": 24
+   },
+   "params": null,
+   "macs_per_frame": null,
+   "ms_per_frame_cpu": null,
+   "rtf": null,
+   "notes": "unknown keys must be ignored"
+  },
+  {
+   "model": "Wiener (min. statistics)",
+   "set": "real",
+   "family": "baseline",
+   "causal": true,
+   "distilled": false,
+   "dnsmos_sig": 3.359,
+   "dnsmos_bak": 3.048,
+   "dnsmos_ovrl": {
+    "mean": 2.535,
+    "ci95": 0.03,
+    "n": 24
+   },
+   "params": 0,
+   "macs_per_frame": null,
+   "ms_per_frame_cpu": 0.021,
+   "rtf": 0.0021,
+   "notes": "unknown keys must be ignored"
+  },
+  {
+   "model": "CRN-64",
+   "set": "real",
+   "family": "ours",
+   "causal": true,
+   "distilled": false,
+   "dnsmos_sig": 3.449,
+   "dnsmos_bak": 3.528,
+   "dnsmos_ovrl": {
+    "mean": 2.835,
+    "ci95": 0.03,
+    "n": 24
+   },
+   "params": 268000,
+   "macs_per_frame": 312000,
+   "ms_per_frame_cpu": 0.071,
+   "rtf": 0.0071,
+   "notes": "unknown keys must be ignored"
+  },
+  {
+   "model": "CRN-64 (KD)",
+   "set": "real",
+   "family": "ours",
+   "causal": true,
+   "distilled": true,
+   "dnsmos_sig": 3.47,
+   "dnsmos_bak": 3.64,
+   "dnsmos_ovrl": {
+    "mean": 2.905,
+    "ci95": 0.03,
+    "n": 24
+   },
+   "params": 268000,
+   "macs_per_frame": 312000,
+   "ms_per_frame_cpu": 0.071,
+   "rtf": 0.0071,
+   "notes": "unknown keys must be ignored"
+  },
+  {
+   "model": "CRN-128",
+   "set": "real",
+   "family": "ours",
+   "causal": true,
+   "distilled": false,
+   "dnsmos_sig": 3.476,
+   "dnsmos_bak": 3.672,
+   "dnsmos_ovrl": {
+    "mean": 2.925,
+    "ci95": 0.03,
+    "n": 24
+   },
+   "params": 520000,
+   "macs_per_frame": 760000,
+   "ms_per_frame_cpu": 0.118,
+   "rtf": 0.0118,
+   "notes": "unknown keys must be ignored"
+  },
+  {
+   "model": "CRN-128 (KD)",
+   "set": "real",
+   "family": "ours",
+   "causal": true,
+   "distilled": true,
+   "dnsmos_sig": 3.494,
+   "dnsmos_bak": 3.768,
+   "dnsmos_ovrl": {
+    "mean": 2.985,
+    "ci95": 0.03,
+    "n": 24
+   },
+   "params": 520000,
+   "macs_per_frame": 760000,
+   "ms_per_frame_cpu": 0.118,
+   "rtf": 0.0118,
+   "notes": "unknown keys must be ignored"
+  },
+  {
+   "model": "CRN-256",
+   "set": "real",
+   "family": "ours",
+   "causal": true,
+   "distilled": false,
+   "dnsmos_sig": 3.497,
+   "dnsmos_bak": 3.784,
+   "dnsmos_ovrl": {
+    "mean": 2.995,
+    "ci95": 0.03,
+    "n": 24
+   },
+   "params": 1214038,
+   "macs_per_frame": 1957456,
+   "ms_per_frame_cpu": 0.209,
+   "rtf": 0.0209,
+   "notes": "unknown keys must be ignored"
+  },
+  {
+   "model": "CRN-256 (KD)",
+   "set": "real",
+   "family": "ours",
+   "causal": true,
+   "distilled": true,
+   "dnsmos_sig": 3.503,
+   "dnsmos_bak": 3.816,
+   "dnsmos_ovrl": {
+    "mean": 3.015,
+    "ci95": 0.03,
+    "n": 24
+   },
+   "params": 1214038,
+   "macs_per_frame": 1957456,
+   "ms_per_frame_cpu": 0.209,
+   "rtf": 0.0209,
+   "notes": "unknown keys must be ignored"
+  },
+  {
+   "model": "Teacher (bi-GRU 512, non-causal)",
+   "set": "real",
+   "family": "teacher",
+   "causal": false,
+   "distilled": false,
+   "dnsmos_sig": 3.539,
+   "dnsmos_bak": 4.008,
+   "dnsmos_ovrl": {
+    "mean": 3.135,
+    "ci95": 0.03,
+    "n": 24
+   },
+   "params": 6100000,
+   "macs_per_frame": 9800000,
+   "ms_per_frame_cpu": 0.95,
+   "rtf": 0.095,
+   "notes": "unknown keys must be ignored"
+  },
+  {
+   "model": "RNNoise",
+   "set": "real",
+   "family": "reference",
+   "causal": true,
+   "distilled": false,
+   "dnsmos_sig": 3.425,
+   "dnsmos_bak": 3.4,
+   "dnsmos_ovrl": {
+    "mean": 2.755,
+    "ci95": 0.03,
+    "n": 24
+   },
+   "params": 88000,
+   "macs_per_frame": 40000,
+   "ms_per_frame_cpu": 0.03,
+   "rtf": 0.003,
+   "notes": "unknown keys must be ignored"
+  },
+  {
+   "model": "DeepFilterNet3",
+   "set": "real",
+   "family": "reference",
+   "causal": true,
+   "distilled": false,
+   "dnsmos_sig": 3.56,
+   "dnsmos_bak": 4.12,
+   "dnsmos_ovrl": {
+    "mean": 3.205,
+    "ci95": 0.03,
+    "n": 24
+   },
+   "params": 2130000,
+   "macs_per_frame": 3500000,
+   "ms_per_frame_cpu": 0.62,
+   "rtf": 0.062,
+   "notes": "unknown keys must be ignored"
+  }
+ ],
+ "per_noise_type": {
+  "vbd": {
+   "bus": {
+    "Noisy (unprocessed)": {
+     "pesq": 1.47,
+     "stoi": 0.8994,
+     "n": 100
+    },
+    "Wiener (min. statistics)": {
+     "pesq": 1.654,
+     "stoi": 0.904,
+     "n": 100
+    },
+    "CRN-64": {
+     "pesq": 1.91,
+     "stoi": 0.9104,
+     "n": 100
+    },
+    "CRN-64 (KD)": {
+     "pesq": 1.998,
+     "stoi": 0.9126,
+     "n": 100
+    },
+    "CRN-128": {
+     "pesq": 2.022,
+     "stoi": 0.9132,
+     "n": 100
+    },
+    "CRN-128 (KD)": {
+     "pesq": 2.094,
+     "stoi": 0.915,
+     "n": 100
+    },
+    "CRN-256": {
+     "pesq": 2.102,
+     "stoi": 0.9152,
+     "n": 100
+    },
+    "CRN-256 (KD)": {
+     "pesq": 2.126,
+     "stoi": 0.9158,
+     "n": 100
+    }
+   },
+   "cafe": {
+    "Noisy (unprocessed)": {
+     "pesq": 1.72,
+     "stoi": 0.9094,
+     "n": 100
+    },
+    "Wiener (min. statistics)": {
+     "pesq": 1.927,
+     "stoi": 0.914,
+     "n": 100
+    },
+    "CRN-64": {
+     "pesq": 2.215,
+     "stoi": 0.9204,
+     "n": 100
+    },
+    "CRN-64 (KD)": {
+     "pesq": 2.314,
+     "stoi": 0.9226,
+     "n": 100
+    },
+    "CRN-128": {
+     "pesq": 2.341,
+     "stoi": 0.9232,
+     "n": 100
+    },
+    "CRN-128 (KD)": {
+     "pesq": 2.422,
+     "stoi": 0.925,
+     "n": 100
+    },
+    "CRN-256": {
+     "pesq": 2.431,
+     "stoi": 0.9252,
+     "n": 100
+    },
+    "CRN-256 (KD)": {
+     "pesq": 2.458,
+     "stoi": 0.9258,
+     "n": 100
+    }
+   },
+   "living room": {
+    "Noisy (unprocessed)": {
+     "pesq": 1.97,
+     "stoi": 0.9194,
+     "n": 100
+    },
+    "Wiener (min. statistics)": {
+     "pesq": 2.2,
+     "stoi": 0.924,
+     "n": 100
+    },
+    "CRN-64": {
+     "pesq": 2.52,
+     "stoi": 0.9304,
+     "n": 100
+    },
+    "CRN-64 (KD)": {
+     "pesq": 2.63,
+     "stoi": 0.9326,
+     "n": 100
+    },
+    "CRN-128": {
+     "pesq": 2.66,
+     "stoi": 0.9332,
+     "n": 100
+    },
+    "CRN-128 (KD)": {
+     "pesq": 2.75,
+     "stoi": 0.935,
+     "n": 100
+    },
+    "CRN-256": {
+     "pesq": 2.76,
+     "stoi": 0.9352,
+     "n": 100
+    },
+    "CRN-256 (KD)": {
+     "pesq": 2.79,
+     "stoi": 0.9358,
+     "n": 100
+    }
+   },
+   "office": {
+    "Noisy (unprocessed)": {
+     "pesq": 2.22,
+     "stoi": 0.9294,
+     "n": 100
+    },
+    "Wiener (min. statistics)": {
+     "pesq": 2.473,
+     "stoi": 0.934,
+     "n": 100
+    },
+    "CRN-64": {
+     "pesq": 2.825,
+     "stoi": 0.9404,
+     "n": 100
+    },
+    "CRN-64 (KD)": {
+     "pesq": 2.946,
+     "stoi": 0.9426,
+     "n": 100
+    },
+    "CRN-128": {
+     "pesq": 2.979,
+     "stoi": 0.9432,
+     "n": 100
+    },
+    "CRN-128 (KD)": {
+     "pesq": 3.078,
+     "stoi": 0.945,
+     "n": 100
+    },
+    "CRN-256": {
+     "pesq": 3.089,
+     "stoi": 0.9452,
+     "n": 100
+    },
+    "CRN-256 (KD)": {
+     "pesq": 3.122,
+     "stoi": 0.9458,
+     "n": 100
+    }
+   },
+   "public square": {
+    "Noisy (unprocessed)": {
+     "pesq": 2.47,
+     "stoi": 0.9394,
+     "n": 100
+    },
+    "Wiener (min. statistics)": {
+     "pesq": 2.746,
+     "stoi": 0.944,
+     "n": 100
+    },
+    "CRN-64": {
+     "pesq": 3.13,
+     "stoi": 0.9504,
+     "n": 100
+    },
+    "CRN-64 (KD)": {
+     "pesq": 3.262,
+     "stoi": 0.9526,
+     "n": 100
+    },
+    "CRN-128": {
+     "pesq": 3.298,
+     "stoi": 0.9532,
+     "n": 100
+    },
+    "CRN-128 (KD)": {
+     "pesq": 3.406,
+     "stoi": 0.955,
+     "n": 100
+    },
+    "CRN-256": {
+     "pesq": 3.418,
+     "stoi": 0.9552,
+     "n": 100
+    },
+    "CRN-256 (KD)": {
+     "pesq": 3.454,
+     "stoi": 0.9558,
+     "n": 100
+    }
+   }
+  },
+  "ood_esc": {
+   "rain": {
+    "Noisy (unprocessed)": {
+     "pesq": 1.17,
+     "stoi": 0.8994,
+     "n": 100
+    },
+    "Wiener (min. statistics)": {
+     "pesq": 1.354,
+     "stoi": 0.904,
+     "n": 100
+    },
+    "CRN-64": {
+     "pesq": 1.61,
+     "stoi": 0.9104,
+     "n": 100
+    },
+    "CRN-64 (KD)": {
+     "pesq": 1.698,
+     "stoi": 0.9126,
+     "n": 100
+    },
+    "CRN-128": {
+     "pesq": 1.722,
+     "stoi": 0.9132,
+     "n": 100
+    },
+    "CRN-128 (KD)": {
+     "pesq": 1.794,
+     "stoi": 0.915,
+     "n": 100
+    },
+    "CRN-256": {
+     "pesq": 1.802,
+     "stoi": 0.9152,
+     "n": 100
+    },
+    "CRN-256 (KD)": {
+     "pesq": 1.826,
+     "stoi": 0.9158,
+     "n": 100
+    }
+   },
+   "traffic": {
+    "Noisy (unprocessed)": {
+     "pesq": 1.42,
+     "stoi": 0.9094,
+     "n": 100
+    },
+    "Wiener (min. statistics)": {
+     "pesq": 1.627,
+     "stoi": 0.914,
+     "n": 100
+    },
+    "CRN-64": {
+     "pesq": 1.915,
+     "stoi": 0.9204,
+     "n": 100
+    },
+    "CRN-64 (KD)": {
+     "pesq": 2.014,
+     "stoi": 0.9226,
+     "n": 100
+    },
+    "CRN-128": {
+     "pesq": 2.041,
+     "stoi": 0.9232,
+     "n": 100
+    },
+    "CRN-128 (KD)": {
+     "pesq": 2.122,
+     "stoi": 0.925,
+     "n": 100
+    },
+    "CRN-256": {
+     "pesq": 2.131,
+     "stoi": 0.9252,
+     "n": 100
+    },
+    "CRN-256 (KD)": {
+     "pesq": 2.158,
+     "stoi": 0.9258,
+     "n": 100
+    }
+   },
+   "keyboard typing": {
+    "Noisy (unprocessed)": {
+     "pesq": 1.67,
+     "stoi": 0.9194,
+     "n": 100
+    },
+    "Wiener (min. statistics)": {
+     "pesq": 1.9,
+     "stoi": 0.924,
+     "n": 100
+    },
+    "CRN-64": {
+     "pesq": 2.22,
+     "stoi": 0.9304,
+     "n": 100
+    },
+    "CRN-64 (KD)": {
+     "pesq": 2.33,
+     "stoi": 0.9326,
+     "n": 100
+    },
+    "CRN-128": {
+     "pesq": 2.36,
+     "stoi": 0.9332,
+     "n": 100
+    },
+    "CRN-128 (KD)": {
+     "pesq": 2.45,
+     "stoi": 0.935,
+     "n": 100
+    },
+    "CRN-256": {
+     "pesq": 2.46,
+     "stoi": 0.9352,
+     "n": 100
+    },
+    "CRN-256 (KD)": {
+     "pesq": 2.49,
+     "stoi": 0.9358,
+     "n": 100
+    }
+   },
+   "siren": {
+    "Noisy (unprocessed)": {
+     "pesq": 1.92,
+     "stoi": 0.9294,
+     "n": 100
+    },
+    "Wiener (min. statistics)": {
+     "pesq": 2.173,
+     "stoi": 0.934,
+     "n": 100
+    },
+    "CRN-64": {
+     "pesq": 2.525,
+     "stoi": 0.9404,
+     "n": 100
+    },
+    "CRN-64 (KD)": {
+     "pesq": 2.646,
+     "stoi": 0.9426,
+     "n": 100
+    },
+    "CRN-128": {
+     "pesq": 2.679,
+     "stoi": 0.9432,
+     "n": 100
+    },
+    "CRN-128 (KD)": {
+     "pesq": 2.778,
+     "stoi": 0.945,
+     "n": 100
+    },
+    "CRN-256": {
+     "pesq": 2.789,
+     "stoi": 0.9452,
+     "n": 100
+    },
+    "CRN-256 (KD)": {
+     "pesq": 2.822,
+     "stoi": 0.9458,
+     "n": 100
+    }
+   },
+   "crying baby": {
+    "Noisy (unprocessed)": {
+     "pesq": 2.17,
+     "stoi": 0.9394,
+     "n": 100
+    },
+    "Wiener (min. statistics)": {
+     "pesq": 2.446,
+     "stoi": 0.944,
+     "n": 100
+    },
+    "CRN-64": {
+     "pesq": 2.83,
+     "stoi": 0.9504,
+     "n": 100
+    },
+    "CRN-64 (KD)": {
+     "pesq": 2.962,
+     "stoi": 0.9526,
+     "n": 100
+    },
+    "CRN-128": {
+     "pesq": 2.998,
+     "stoi": 0.9532,
+     "n": 100
+    },
+    "CRN-128 (KD)": {
+     "pesq": 3.106,
+     "stoi": 0.955,
+     "n": 100
+    },
+    "CRN-256": {
+     "pesq": 3.118,
+     "stoi": 0.9552,
+     "n": 100
+    },
+    "CRN-256 (KD)": {
+     "pesq": 3.154,
+     "stoi": 0.9558,
+     "n": 100
+    }
+   },
+   "vacuum cleaner": {
+    "Noisy (unprocessed)": {
+     "pesq": 2.42,
+     "stoi": 0.9494,
+     "n": 100
+    },
+    "Wiener (min. statistics)": {
+     "pesq": 2.719,
+     "stoi": 0.954,
+     "n": 100
+    },
+    "CRN-64": {
+     "pesq": 3.135,
+     "stoi": 0.9604,
+     "n": 100
+    },
+    "CRN-64 (KD)": {
+     "pesq": 3.278,
+     "stoi": 0.9626,
+     "n": 100
+    },
+    "CRN-128": {
+     "pesq": 3.317,
+     "stoi": 0.9632,
+     "n": 100
+    },
+    "CRN-128 (KD)": {
+     "pesq": 3.434,
+     "stoi": 0.965,
+     "n": 100
+    },
+    "CRN-256": {
+     "pesq": 3.447,
+     "stoi": 0.9652,
+     "n": 100
+    },
+    "CRN-256 (KD)": {
+     "pesq": 3.486,
+     "stoi": 0.9658,
+     "n": 100
+    }
+   }
+  }
+ },
+ "per_snr": {
+  "vbd": {
+   "2.5": {
+    "Noisy (unprocessed)": {
+     "pesq": 1.5
+    },
+    "Wiener (min. statistics)": {
+     "pesq": 1.753,
+     "noise_reduction_db": 12.93,
+     "speech_distortion_sisdr": 11.65
+    },
+    "CRN-64": {
+     "pesq": 2.105,
+     "noise_reduction_db": 16.45,
+     "speech_distortion_sisdr": 11.18
+    },
+    "CRN-64 (KD)": {
+     "pesq": 2.226,
+     "noise_reduction_db": 17.66,
+     "speech_distortion_sisdr": 11.01
+    },
+    "CRN-128": {
+     "pesq": 2.259,
+     "noise_reduction_db": 17.99,
+     "speech_distortion_sisdr": 10.96
+    },
+    "CRN-128 (KD)": {
+     "pesq": 2.358,
+     "noise_reduction_db": 18.98,
+     "speech_distortion_sisdr": 10.83
+    },
+    "CRN-256": {
+     "pesq": 2.369,
+     "noise_reduction_db": 19.09,
+     "speech_distortion_sisdr": 10.82
+    },
+    "CRN-256 (KD)": {
+     "pesq": 2.402,
+     "noise_reduction_db": 19.42,
+     "speech_distortion_sisdr": 10.77
+    }
+   },
+   "7.5": {
+    "Noisy (unprocessed)": {
+     "pesq": 1.88
+    },
+    "Wiener (min. statistics)": {
+     "pesq": 2.105,
+     "noise_reduction_db": 11.33,
+     "speech_distortion_sisdr": 15.85
+    },
+    "CRN-64": {
+     "pesq": 2.419,
+     "noise_reduction_db": 14.85,
+     "speech_distortion_sisdr": 15.38
+    },
+    "CRN-64 (KD)": {
+     "pesq": 2.527,
+     "noise_reduction_db": 16.06,
+     "speech_distortion_sisdr": 15.21
+    },
+    "CRN-128": {
+     "pesq": 2.556,
+     "noise_reduction_db": 16.39,
+     "speech_distortion_sisdr": 15.16
+    },
+    "CRN-128 (KD)": {
+     "pesq": 2.644,
+     "noise_reduction_db": 17.38,
+     "speech_distortion_sisdr": 15.03
+    },
+    "CRN-256": {
+     "pesq": 2.654,
+     "noise_reduction_db": 17.49,
+     "speech_distortion_sisdr": 15.02
+    },
+    "CRN-256 (KD)": {
+     "pesq": 2.684,
+     "noise_reduction_db": 17.82,
+     "speech_distortion_sisdr": 14.97
+    }
+   },
+   "12.5": {
+    "Noisy (unprocessed)": {
+     "pesq": 2.26
+    },
+    "Wiener (min. statistics)": {
+     "pesq": 2.458,
+     "noise_reduction_db": 9.73,
+     "speech_distortion_sisdr": 20.05
+    },
+    "CRN-64": {
+     "pesq": 2.733,
+     "noise_reduction_db": 13.25,
+     "speech_distortion_sisdr": 19.57
+    },
+    "CRN-64 (KD)": {
+     "pesq": 2.828,
+     "noise_reduction_db": 14.46,
+     "speech_distortion_sisdr": 19.41
+    },
+    "CRN-128": {
+     "pesq": 2.853,
+     "noise_reduction_db": 14.79,
+     "speech_distortion_sisdr": 19.36
+    },
+    "CRN-128 (KD)": {
+     "pesq": 2.931,
+     "noise_reduction_db": 15.78,
+     "speech_distortion_sisdr": 19.23
+    },
+    "CRN-256": {
+     "pesq": 2.939,
+     "noise_reduction_db": 15.89,
+     "speech_distortion_sisdr": 19.21
+    },
+    "CRN-256 (KD)": {
+     "pesq": 2.965,
+     "noise_reduction_db": 16.22,
+     "speech_distortion_sisdr": 19.17
+    }
+   },
+   "17.5": {
+    "Noisy (unprocessed)": {
+     "pesq": 2.64
+    },
+    "Wiener (min. statistics)": {
+     "pesq": 2.81,
+     "noise_reduction_db": 8.13,
+     "speech_distortion_sisdr": 24.26
+    },
+    "CRN-64": {
+     "pesq": 3.047,
+     "noise_reduction_db": 11.65,
+     "speech_distortion_sisdr": 23.78
+    },
+    "CRN-64 (KD)": {
+     "pesq": 3.128,
+     "noise_reduction_db": 12.86,
+     "speech_distortion_sisdr": 23.61
+    },
+    "CRN-128": {
+     "pesq": 3.151,
+     "noise_reduction_db": 13.19,
+     "speech_distortion_sisdr": 23.57
+    },
+    "CRN-128 (KD)": {
+     "pesq": 3.217,
+     "noise_reduction_db": 14.18,
+     "speech_distortion_sisdr": 23.43
+    },
+    "CRN-256": {
+     "pesq": 3.225,
+     "noise_reduction_db": 14.29,
+     "speech_distortion_sisdr": 23.42
+    },
+    "CRN-256 (KD)": {
+     "pesq": 3.247,
+     "noise_reduction_db": 14.62,
+     "speech_distortion_sisdr": 23.37
+    }
+   }
+  },
+  "ood_esc": {
+   "-5": {
+    "Noisy (unprocessed)": {
+     "pesq": 0.9
+    },
+    "Wiener (min. statistics)": {
+     "pesq": 1.153,
+     "noise_reduction_db": 14.53,
+     "speech_distortion_sisdr": 11.65
+    },
+    "CRN-64": {
+     "pesq": 1.505,
+     "noise_reduction_db": 18.05,
+     "speech_distortion_sisdr": 11.18
+    },
+    "CRN-64 (KD)": {
+     "pesq": 1.626,
+     "noise_reduction_db": 19.26,
+     "speech_distortion_sisdr": 11.01
+    },
+    "CRN-128": {
+     "pesq": 1.659,
+     "noise_reduction_db": 19.59,
+     "speech_distortion_sisdr": 10.96
+    },
+    "CRN-128 (KD)": {
+     "pesq": 1.758,
+     "noise_reduction_db": 20.58,
+     "speech_distortion_sisdr": 10.83
+    },
+    "CRN-256": {
+     "pesq": 1.769,
+     "noise_reduction_db": 20.69,
+     "speech_distortion_sisdr": 10.82
+    },
+    "CRN-256 (KD)": {
+     "pesq": 1.802,
+     "noise_reduction_db": 21.02,
+     "speech_distortion_sisdr": 10.77
+    }
+   },
+   "0": {
+    "Noisy (unprocessed)": {
+     "pesq": 1.28
+    },
+    "Wiener (min. statistics)": {
+     "pesq": 1.505,
+     "noise_reduction_db": 12.93,
+     "speech_distortion_sisdr": 15.85
+    },
+    "CRN-64": {
+     "pesq": 1.819,
+     "noise_reduction_db": 16.45,
+     "speech_distortion_sisdr": 15.38
+    },
+    "CRN-64 (KD)": {
+     "pesq": 1.927,
+     "noise_reduction_db": 17.66,
+     "speech_distortion_sisdr": 15.21
+    },
+    "CRN-128": {
+     "pesq": 1.956,
+     "noise_reduction_db": 17.99,
+     "speech_distortion_sisdr": 15.16
+    },
+    "CRN-128 (KD)": {
+     "pesq": 2.044,
+     "noise_reduction_db": 18.98,
+     "speech_distortion_sisdr": 15.03
+    },
+    "CRN-256": {
+     "pesq": 2.054,
+     "noise_reduction_db": 19.09,
+     "speech_distortion_sisdr": 15.02
+    },
+    "CRN-256 (KD)": {
+     "pesq": 2.084,
+     "noise_reduction_db": 19.42,
+     "speech_distortion_sisdr": 14.97
+    }
+   },
+   "5": {
+    "Noisy (unprocessed)": {
+     "pesq": 1.66
+    },
+    "Wiener (min. statistics)": {
+     "pesq": 1.858,
+     "noise_reduction_db": 11.33,
+     "speech_distortion_sisdr": 20.05
+    },
+    "CRN-64": {
+     "pesq": 2.133,
+     "noise_reduction_db": 14.85,
+     "speech_distortion_sisdr": 19.57
+    },
+    "CRN-64 (KD)": {
+     "pesq": 2.228,
+     "noise_reduction_db": 16.06,
+     "speech_distortion_sisdr": 19.41
+    },
+    "CRN-128": {
+     "pesq": 2.253,
+     "noise_reduction_db": 16.39,
+     "speech_distortion_sisdr": 19.36
+    },
+    "CRN-128 (KD)": {
+     "pesq": 2.331,
+     "noise_reduction_db": 17.38,
+     "speech_distortion_sisdr": 19.23
+    },
+    "CRN-256": {
+     "pesq": 2.339,
+     "noise_reduction_db": 17.49,
+     "speech_distortion_sisdr": 19.21
+    },
+    "CRN-256 (KD)": {
+     "pesq": 2.365,
+     "noise_reduction_db": 17.82,
+     "speech_distortion_sisdr": 19.17
+    }
+   },
+   "10": {
+    "Noisy (unprocessed)": {
+     "pesq": 2.04
+    },
+    "Wiener (min. statistics)": {
+     "pesq": 2.21,
+     "noise_reduction_db": 9.73,
+     "speech_distortion_sisdr": 24.26
+    },
+    "CRN-64": {
+     "pesq": 2.447,
+     "noise_reduction_db": 13.25,
+     "speech_distortion_sisdr": 23.78
+    },
+    "CRN-64 (KD)": {
+     "pesq": 2.528,
+     "noise_reduction_db": 14.46,
+     "speech_distortion_sisdr": 23.61
+    },
+    "CRN-128": {
+     "pesq": 2.551,
+     "noise_reduction_db": 14.79,
+     "speech_distortion_sisdr": 23.57
+    },
+    "CRN-128 (KD)": {
+     "pesq": 2.617,
+     "noise_reduction_db": 15.78,
+     "speech_distortion_sisdr": 23.43
+    },
+    "CRN-256": {
+     "pesq": 2.625,
+     "noise_reduction_db": 15.89,
+     "speech_distortion_sisdr": 23.42
+    },
+    "CRN-256 (KD)": {
+     "pesq": 2.647,
+     "noise_reduction_db": 16.22,
+     "speech_distortion_sisdr": 23.37
+    }
+   },
+   "15": {
+    "Noisy (unprocessed)": {
+     "pesq": 2.42
+    },
+    "Wiener (min. statistics)": {
+     "pesq": 2.563,
+     "noise_reduction_db": 8.13,
+     "speech_distortion_sisdr": 28.46
+    },
+    "CRN-64": {
+     "pesq": 2.761,
+     "noise_reduction_db": 11.65,
+     "speech_distortion_sisdr": 27.98
+    },
+    "CRN-64 (KD)": {
+     "pesq": 2.829,
+     "noise_reduction_db": 12.86,
+     "speech_distortion_sisdr": 27.81
+    },
+    "CRN-128": {
+     "pesq": 2.848,
+     "noise_reduction_db": 13.19,
+     "speech_distortion_sisdr": 27.77
+    },
+    "CRN-128 (KD)": {
+     "pesq": 2.904,
+     "noise_reduction_db": 14.18,
+     "speech_distortion_sisdr": 27.63
+    },
+    "CRN-256": {
+     "pesq": 2.91,
+     "noise_reduction_db": 14.29,
+     "speech_distortion_sisdr": 27.62
+    },
+    "CRN-256 (KD)": {
+     "pesq": 2.928,
+     "noise_reduction_db": 14.62,
+     "speech_distortion_sisdr": 27.57
+    }
+   }
+  }
+ },
+ "pareto": [
+  {
+   "model": "CRN-64",
+   "hidden": 64,
+   "distilled": false,
+   "seed": 0,
+   "macs_per_frame": 312000,
+   "pesq": 2.52,
+   "dnsmos_ovrl": 2.67
+  },
+  {
+   "model": "CRN-64 (KD)",
+   "hidden": 64,
+   "distilled": true,
+   "seed": 0,
+   "macs_per_frame": 312000,
+   "pesq": 2.63,
+   "dnsmos_ovrl": 2.74
+  },
+  {
+   "model": "CRN-128",
+   "hidden": 128,
+   "distilled": false,
+   "seed": 0,
+   "macs_per_frame": 760000,
+   "pesq": 2.66,
+   "dnsmos_ovrl": 2.76
+  },
+  {
+   "model": "CRN-128",
+   "hidden": 128,
+   "distilled": false,
+   "seed": 1,
+   "macs_per_frame": 760000,
+   "pesq": 2.685,
+   "dnsmos_ovrl": 2.78
+  },
+  {
+   "model": "CRN-128 (KD)",
+   "hidden": 128,
+   "distilled": true,
+   "seed": 0,
+   "macs_per_frame": 760000,
+   "pesq": 2.75,
+   "dnsmos_ovrl": 2.82
+  },
+  {
+   "model": "CRN-128 (KD)",
+   "hidden": 128,
+   "distilled": true,
+   "seed": 1,
+   "macs_per_frame": 760000,
+   "pesq": 2.72,
+   "dnsmos_ovrl": 2.84
+  },
+  {
+   "model": "CRN-256",
+   "hidden": 256,
+   "distilled": false,
+   "seed": 0,
+   "macs_per_frame": 1957456,
+   "pesq": 2.76,
+   "dnsmos_ovrl": 2.83
+  },
+  {
+   "model": "CRN-256 (KD)",
+   "hidden": 256,
+   "distilled": true,
+   "seed": 0,
+   "macs_per_frame": 1957456,
+   "pesq": 2.79,
+   "dnsmos_ovrl": 2.85
+  }
+ ],
+ "atten_sweep": [
+  {
+   "atten_lim_db": 6,
+   "pesq": 2.31,
+   "speech_distortion_sisdr": 27.9,
+   "noise_reduction_db": 5.8,
+   "dnsmos_bak": 2.71
+  },
+  {
+   "atten_lim_db": 12,
+   "pesq": 2.58,
+   "speech_distortion_sisdr": 24.6,
+   "noise_reduction_db": 11.2,
+   "dnsmos_bak": 3.42
+  },
+  {
+   "atten_lim_db": 18,
+   "pesq": 2.71,
+   "speech_distortion_sisdr": 22.1,
+   "noise_reduction_db": 15.9,
+   "dnsmos_bak": 3.81
+  },
+  {
+   "atten_lim_db": 24,
+   "pesq": 2.75,
+   "speech_distortion_sisdr": 20.7,
+   "noise_reduction_db": 18.4,
+   "dnsmos_bak": 3.96
+  },
+  {
+   "atten_lim_db": null,
+   "pesq": 2.76,
+   "speech_distortion_sisdr": 19.8,
+   "noise_reduction_db": 20.1,
+   "dnsmos_bak": 4.02
+  }
+ ],
+ "lookahead": [
+  {
+   "lookahead_frames": 0,
+   "latency_ms": 20,
+   "pesq": 2.762,
+   "dnsmos_ovrl": 2.84
+  },
+  {
+   "lookahead_frames": 1,
+   "latency_ms": 30,
+   "pesq": 2.831,
+   "dnsmos_ovrl": 2.88
+  },
+  {
+   "lookahead_frames": 2,
+   "latency_ms": 40,
+   "pesq": 2.868,
+   "dnsmos_ovrl": 2.9
+  }
+ ],
+ "quantization": [
+  {
+   "variant": "fp32",
+   "size_kb": 4856,
+   "ms_per_frame": 0.209,
+   "pesq": 2.762,
+   "pesq_ood": 2.31
+  },
+  {
+   "variant": "int8-dynamic",
+   "size_kb": 1402,
+   "ms_per_frame": 0.171,
+   "pesq": 2.748,
+   "pesq_ood": 2.3
+  },
+  {
+   "variant": "int8-static",
+   "size_kb": 1288,
+   "ms_per_frame": 0.122,
+   "pesq": 2.701,
+   "pesq_ood": 2.24
+  }
+ ],
+ "significance": [
+  {
+   "a": "CRN-64 (KD)",
+   "b": "CRN-64",
+   "metric": "pesq",
+   "set": "vbd",
+   "median_diff": 0.094,
+   "p_wilcoxon": 0.0004,
+   "p_holm": 0.0012
+  },
+  {
+   "a": "CRN-128 (KD)",
+   "b": "CRN-128",
+   "metric": "pesq",
+   "set": "vbd",
+   "median_diff": 0.071,
+   "p_wilcoxon": 0.006,
+   "p_holm": 0.012
+  },
+  {
+   "a": "CRN-256 (KD)",
+   "b": "CRN-256",
+   "metric": "pesq",
+   "set": "vbd",
+   "median_diff": 0.018,
+   "p_wilcoxon": 0.21,
+   "p_holm": 0.21
+  },
+  {
+   "a": "CRN-256",
+   "b": "Wiener (min. statistics)",
+   "metric": "pesq",
+   "set": "vbd",
+   "median_diff": 0.55,
+   "p_wilcoxon": 1e-40
+  },
+  {
+   "a": "CRN-128 (KD)",
+   "b": "CRN-128",
+   "metric": "dnsmos_ovrl",
+   "set": "ood_esc",
+   "median_diff": 0.06,
+   "p_wilcoxon": 0.03,
+   "p_holm": 0.06
+  },
+  {
+   "a": "CRN-256 (KD)",
+   "b": "CRN-256",
+   "metric": "pesq",
+   "set": "ood_esc",
+   "median_diff": 0.05,
+   "p_wilcoxon": 0.004
+  }
+ ],
+ "per_sample": {
+  "p232_032": {
+   "pesq": 2.263,
+   "stoi": 0.9042,
+   "si_sdr": 14.24
+  },
+  "p257_223": {
+   "pesq": 2.88,
+   "stoi": 0.9299,
+   "si_sdr": 14.88
+  },
+  "p257_147": {
+   "pesq": 2.786,
+   "stoi": 0.9317,
+   "si_sdr": 14.8
+  },
+  "p257_430": {
+   "pesq": 2.994,
+   "stoi": 0.9489,
+   "si_sdr": 14.46
+  },
+  "p232_410": {
+   "pesq": 2.774,
+   "stoi": 0.9368,
+   "si_sdr": 18.25
+  },
+  "p257_007": {
+   "pesq": 2.929,
+   "stoi": 0.9202,
+   "si_sdr": 18.88
+  }
+ },
+ "mos": {
+  "note": "unknown shape, ignored by the web app"
+ }
+}

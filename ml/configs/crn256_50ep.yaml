@@ -1,0 +1,5 @@
+# R12b: plain CRN-256, 50 epochs; the matched baseline for the 50-epoch augmentation ablations (R12–R14).
+base: crn_small.yaml
+run_name: crn256_50ep
+schedule:
+  epochs: 50

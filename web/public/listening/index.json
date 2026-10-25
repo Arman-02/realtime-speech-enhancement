@@ -1,0 +1,313 @@
+{
+  "version": 1,
+  "conditions": [
+    "noisy",
+    "wiener",
+    "crn",
+    "crn_kd",
+    "clean"
+  ],
+  "hidden_reference": "clean",
+  "low_anchor": "noisy",
+  "models": {
+    "noisy": "Noisy (unprocessed)",
+    "wiener": "Spectral subtraction (Wiener)",
+    "clean": "Clean reference",
+    "crn": "CRN-256 (benchmark)",
+    "crn_kd": "CRN-256 (KD)"
+  },
+  "normalisation": "every file RMS-normalised to -26 dBFS (peak-limited to -0.1 dBFS)",
+  "practice": {
+    "id": "practice",
+    "utterance": "p232_251",
+    "files": {
+      "noisy": "listening/practice_noisy.wav",
+      "wiener": "listening/practice_wiener.wav",
+      "crn": "listening/practice_crn.wav",
+      "crn_kd": "listening/practice_crn_kd.wav",
+      "clean": "listening/practice_clean.wav"
+    }
+  },
+  "trials": [
+    {
+      "id": "t01",
+      "utterance": "p257_064",
+      "set": "vbd",
+      "noise_type": "bus",
+      "snr_db": 12.5,
+      "files": {
+        "noisy": "listening/t01_noisy.wav",
+        "wiener": "listening/t01_wiener.wav",
+        "crn": "listening/t01_crn.wav",
+        "crn_kd": "listening/t01_crn_kd.wav",
+        "clean": "listening/t01_clean.wav"
+      }
+    },
+    {
+      "id": "t02",
+      "utterance": "p257_352",
+      "set": "vbd",
+      "noise_type": "living room",
+      "snr_db": 17.5,
+      "files": {
+        "noisy": "listening/t02_noisy.wav",
+        "wiener": "listening/t02_wiener.wav",
+        "crn": "listening/t02_crn.wav",
+        "crn_kd": "listening/t02_crn_kd.wav",
+        "clean": "listening/t02_clean.wav"
+      }
+    },
+    {
+      "id": "t03",
+      "utterance": "p257_433",
+      "set": "vbd",
+      "noise_type": "office",
+      "snr_db": 12.5,
+      "files": {
+        "noisy": "listening/t03_noisy.wav",
+        "wiener": "listening/t03_wiener.wav",
+        "crn": "listening/t03_crn.wav",
+        "crn_kd": "listening/t03_crn_kd.wav",
+        "clean": "listening/t03_clean.wav"
+      }
+    },
+    {
+      "id": "t04",
+      "utterance": "p232_031",
+      "set": "vbd",
+      "noise_type": "cafe",
+      "snr_db": 7.5,
+      "files": {
+        "noisy": "listening/t04_noisy.wav",
+        "wiener": "listening/t04_wiener.wav",
+        "crn": "listening/t04_crn.wav",
+        "crn_kd": "listening/t04_crn_kd.wav",
+        "clean": "listening/t04_clean.wav"
+      }
+    },
+    {
+      "id": "t05",
+      "utterance": "p257_017",
+      "set": "vbd",
+      "noise_type": "office",
+      "snr_db": 2.5,
+      "files": {
+        "noisy": "listening/t05_noisy.wav",
+        "wiener": "listening/t05_wiener.wav",
+        "crn": "listening/t05_crn.wav",
+        "crn_kd": "listening/t05_crn_kd.wav",
+        "clean": "listening/t05_clean.wav"
+      }
+    },
+    {
+      "id": "t06",
+      "utterance": "p232_324",
+      "set": "vbd",
+      "noise_type": "cafe",
+      "snr_db": 2.5,
+      "files": {
+        "noisy": "listening/t06_noisy.wav",
+        "wiener": "listening/t06_wiener.wav",
+        "crn": "listening/t06_crn.wav",
+        "crn_kd": "listening/t06_crn_kd.wav",
+        "clean": "listening/t06_clean.wav"
+      }
+    },
+    {
+      "id": "t07",
+      "utterance": "p257_146",
+      "set": "vbd",
+      "noise_type": "bus",
+      "snr_db": 7.5,
+      "files": {
+        "noisy": "listening/t07_noisy.wav",
+        "wiener": "listening/t07_wiener.wav",
+        "crn": "listening/t07_crn.wav",
+        "crn_kd": "listening/t07_crn_kd.wav",
+        "clean": "listening/t07_clean.wav"
+      }
+    },
+    {
+      "id": "t08",
+      "utterance": "p257_347",
+      "set": "vbd",
+      "noise_type": "bus",
+      "snr_db": 2.5,
+      "files": {
+        "noisy": "listening/t08_noisy.wav",
+        "wiener": "listening/t08_wiener.wav",
+        "crn": "listening/t08_crn.wav",
+        "crn_kd": "listening/t08_crn_kd.wav",
+        "clean": "listening/t08_clean.wav"
+      }
+    },
+    {
+      "id": "t09",
+      "utterance": "p257_061",
+      "set": "vbd",
+      "noise_type": "public square",
+      "snr_db": 7.5,
+      "files": {
+        "noisy": "listening/t09_noisy.wav",
+        "wiener": "listening/t09_wiener.wav",
+        "crn": "listening/t09_crn.wav",
+        "crn_kd": "listening/t09_crn_kd.wav",
+        "clean": "listening/t09_clean.wav"
+      }
+    },
+    {
+      "id": "t10",
+      "utterance": "p257_153",
+      "set": "vbd",
+      "noise_type": "living room",
+      "snr_db": 12.5,
+      "files": {
+        "noisy": "listening/t10_noisy.wav",
+        "wiener": "listening/t10_wiener.wav",
+        "crn": "listening/t10_crn.wav",
+        "crn_kd": "listening/t10_crn_kd.wav",
+        "clean": "listening/t10_clean.wav"
+      }
+    },
+    {
+      "id": "t11",
+      "utterance": "p257_380",
+      "set": "vbd",
+      "noise_type": "public square",
+      "snr_db": 17.5,
+      "files": {
+        "noisy": "listening/t11_noisy.wav",
+        "wiener": "listening/t11_wiener.wav",
+        "crn": "listening/t11_crn.wav",
+        "crn_kd": "listening/t11_crn_kd.wav",
+        "clean": "listening/t11_clean.wav"
+      }
+    },
+    {
+      "id": "t12",
+      "utterance": "p232_030",
+      "set": "vbd",
+      "noise_type": "cafe",
+      "snr_db": 12.5,
+      "files": {
+        "noisy": "listening/t12_noisy.wav",
+        "wiener": "listening/t12_wiener.wav",
+        "crn": "listening/t12_crn.wav",
+        "crn_kd": "listening/t12_crn_kd.wav",
+        "clean": "listening/t12_clean.wav"
+      }
+    },
+    {
+      "id": "t13",
+      "utterance": "p232_006",
+      "set": "vbd",
+      "noise_type": "cafe",
+      "snr_db": 17.5,
+      "files": {
+        "noisy": "listening/t13_noisy.wav",
+        "wiener": "listening/t13_wiener.wav",
+        "crn": "listening/t13_crn.wav",
+        "crn_kd": "listening/t13_crn_kd.wav",
+        "clean": "listening/t13_clean.wav"
+      }
+    },
+    {
+      "id": "t14",
+      "utterance": "p257_254",
+      "set": "vbd",
+      "noise_type": "living room",
+      "snr_db": 7.5,
+      "files": {
+        "noisy": "listening/t14_noisy.wav",
+        "wiener": "listening/t14_wiener.wav",
+        "crn": "listening/t14_crn.wav",
+        "crn_kd": "listening/t14_crn_kd.wav",
+        "clean": "listening/t14_clean.wav"
+      }
+    },
+    {
+      "id": "t15",
+      "utterance": "p232_276",
+      "set": "vbd",
+      "noise_type": "bus",
+      "snr_db": 17.5,
+      "files": {
+        "noisy": "listening/t15_noisy.wav",
+        "wiener": "listening/t15_wiener.wav",
+        "crn": "listening/t15_crn.wav",
+        "crn_kd": "listening/t15_crn_kd.wav",
+        "clean": "listening/t15_clean.wav"
+      }
+    },
+    {
+      "id": "t16",
+      "utterance": "p257_216",
+      "set": "vbd",
+      "noise_type": "office",
+      "snr_db": 17.5,
+      "files": {
+        "noisy": "listening/t16_noisy.wav",
+        "wiener": "listening/t16_wiener.wav",
+        "crn": "listening/t16_crn.wav",
+        "crn_kd": "listening/t16_crn_kd.wav",
+        "clean": "listening/t16_clean.wav"
+      }
+    },
+    {
+      "id": "t17",
+      "utterance": "p257_019",
+      "set": "vbd",
+      "noise_type": "public square",
+      "snr_db": 12.5,
+      "files": {
+        "noisy": "listening/t17_noisy.wav",
+        "wiener": "listening/t17_wiener.wav",
+        "crn": "listening/t17_crn.wav",
+        "crn_kd": "listening/t17_crn_kd.wav",
+        "clean": "listening/t17_clean.wav"
+      }
+    },
+    {
+      "id": "t18",
+      "utterance": "p232_182",
+      "set": "vbd",
+      "noise_type": "living room",
+      "snr_db": 2.5,
+      "files": {
+        "noisy": "listening/t18_noisy.wav",
+        "wiener": "listening/t18_wiener.wav",
+        "crn": "listening/t18_crn.wav",
+        "crn_kd": "listening/t18_crn_kd.wav",
+        "clean": "listening/t18_clean.wav"
+      }
+    },
+    {
+      "id": "t19",
+      "utterance": "p257_143",
+      "set": "vbd",
+      "noise_type": "public square",
+      "snr_db": 2.5,
+      "files": {
+        "noisy": "listening/t19_noisy.wav",
+        "wiener": "listening/t19_wiener.wav",
+        "crn": "listening/t19_crn.wav",
+        "crn_kd": "listening/t19_crn_kd.wav",
+        "clean": "listening/t19_clean.wav"
+      }
+    },
+    {
+      "id": "t20",
+      "utterance": "p257_117",
+      "set": "vbd",
+      "noise_type": "office",
+      "snr_db": 7.5,
+      "files": {
+        "noisy": "listening/t20_noisy.wav",
+        "wiener": "listening/t20_wiener.wav",
+        "crn": "listening/t20_crn.wav",
+        "crn_kd": "listening/t20_crn_kd.wav",
+        "clean": "listening/t20_clean.wav"
+      }
+    }
+  ]
+}

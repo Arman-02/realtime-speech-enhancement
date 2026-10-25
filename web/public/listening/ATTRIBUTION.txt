@@ -1,0 +1,4 @@
+Listening-test clips: source audio and licence
+
+All the clips come from the VoiceBank+DEMAND test set, either unprocessed or processed by the systems under test.
+C. Valentini-Botinhao, "Noisy speech database for training speech enhancement algorithms and TTS models", University of Edinburgh, 2017. https://doi.org/10.7488/ds/2117. CC BY 4.0.

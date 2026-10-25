@@ -1,0 +1,8 @@
+# R13: augmentation ablation, CRN-256 50 epochs + reverb (target = direct path + 50 ms early reflections).
+base: crn_small.yaml
+run_name: crn256_reverb_50ep
+schedule:
+  epochs: 50
+data:
+  augment:
+    reverb: {prob: 0.5, manifest: rir_train, early_ms: 50.0}

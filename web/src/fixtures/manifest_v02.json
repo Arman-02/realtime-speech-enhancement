@@ -1,0 +1,78 @@
+{
+ "_fixture": "FAKE manifest for rendering the model card in fixture builds",
+ "name": "crn-demo",
+ "version": "0.2.0",
+ "variant": "demo",
+ "trained": true,
+ "sample_rate": 16000,
+ "n_fft": 320,
+ "hop": 160,
+ "window": "sqrt_hann_periodic",
+ "lookahead_frames": 0,
+ "onnx": "ans_stream.onnx",
+ "onnx_int8": "ans_stream_int8.onnx",
+ "inputs": {
+  "spec": [
+   1,
+   1,
+   161,
+   2
+  ],
+  "state_in": [
+   2,
+   1,
+   256
+  ],
+  "atten_lim_db": [
+   1
+  ]
+ },
+ "outputs": {
+  "spec_out": [
+   1,
+   1,
+   161,
+   2
+  ],
+  "state_out": [
+   2,
+   1,
+   256
+  ]
+ },
+ "state_shape": [
+  2,
+  1,
+  256
+ ],
+ "atten_lim_db": {
+  "default": 100,
+  "min": 0,
+  "max": 100
+ },
+ "params": 1214038,
+ "macs_per_frame": 1957456,
+ "budget": {
+  "weights_kb_fp32": 4742.3,
+  "weights_kb_int8": 1288.0,
+  "peak_activation_kb": 31.4,
+  "state_kb": 2.0,
+  "mmacs_per_s": 195.7,
+  "ms_per_frame": {
+   "m4_torch": 0.41,
+   "m4_ort_fp32": 0.209,
+   "m4_ort_int8": 0.122,
+   "browser_wasm": 0.62,
+   "rpi5_ort": 1.9
+  }
+ },
+ "training": {
+  "data": "VoiceBank+DEMAND + MUSAN",
+  "distilled": true,
+  "git_hash": "fixture0"
+ },
+ "metrics": {
+  "pesq": 2.79,
+  "stoi": 0.939
+ }
+}

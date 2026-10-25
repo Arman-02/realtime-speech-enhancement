@@ -1,0 +1,8 @@
+# R12: augmentation ablation, CRN-256 50 epochs + MUSAN noise (training-only corpus), judged on OOD sets.
+base: crn_small.yaml
+run_name: crn256_musan_50ep
+schedule:
+  epochs: 50
+data:
+  augment:
+    extra_noise: {prob: 0.5, manifest: noise_train}

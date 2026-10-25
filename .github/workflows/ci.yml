@@ -1,0 +1,85 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ml:
+    name: ml (ruff + pytest, CPU, synthetic data)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: ml
+    env:
+      # Tests are small; keep BLAS/torch from oversubscribing the runner.
+      OMP_NUM_THREADS: "2"
+      MKL_NUM_THREADS: "2"
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up uv and Python 3.12
+        uses: astral-sh/setup-uv@v6
+        with:
+          python-version: "3.12"
+          enable-cache: true
+          cache-dependency-glob: ml/uv.lock
+
+      - name: Install dependencies
+        run: uv sync
+
+      - name: Lint (ruff)
+        run: uv run ruff check
+
+      - name: Tests (pytest)
+        run: uv run pytest
+
+  web:
+    name: web (typecheck, lint, vitest incl. ONNX parity, build)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: web
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Lint
+        run: npm run lint
+
+      # Includes the Python/JS parity test: public/models/test_vectors.json replayed through the JS DSP
+      # and the ONNX model (onnxruntime-web's wasm backend running under Node).
+      - name: Tests (vitest)
+        run: npm test
+
+      - name: Build
+        run: npm run build
+
+      - name: Fixture data must not be in the production bundle
+        run: |
+          if grep -rIl -e 'FAKE NUMBERS' -e 'FAKE manifest' dist; then
+            echo "::error::src/fixtures data leaked into dist/"; exit 1
+          fi
+
+      - name: Fixture build compiles (dev/test only, not deployed)
+        run: VITE_USE_FIXTURES=1 npx vite build --outDir ../dist-fixtures --emptyOutDir

@@ -1,0 +1,54 @@
+# ans_crn — primary streaming model (PLAN.md §4.2, §4.5)
+run_name: crn_small
+seed: 0
+device: auto
+
+model:
+  name: ans_crn
+  kwargs:
+    channels: [16, 32, 48, 64]
+    kernel: 3
+    hidden: 256
+    gru_layers: 2
+    mask_max: 1.2
+    compress: 0.3
+
+data:
+  manifests: data/vbd16k/manifests   # relative to the repo root
+  segment: 32000                     # 2 s crops
+  remix_prob: 0.5                    # dynamic mixing with another utterance's noise
+  snr_range: [-5.0, 20.0]
+  gain_prob: 0.5
+  gain_dbfs: [-25.0, -5.0]
+  extra_noise_dir: null
+  num_workers: null                  # null -> min(8, cpus - 2)
+
+loss:
+  spec_weight: 1.0
+  compress: 0.3
+  alpha: 0.3
+  mrstft_weight: 0.0
+  sisdr_weight: 0.0
+
+optim:
+  lr: 1.0e-3
+  weight_decay: 1.0e-5
+  betas: [0.9, 0.999]
+  grad_clip: 5.0
+  ema_decay: 0.999
+
+schedule:
+  epochs: 100
+  warmup_epochs: 2
+  min_lr_ratio: 0.01
+
+batch_size: 32
+
+val:
+  every_epochs: 1
+  metrics_every_epochs: 2            # PESQ/STOI on the val subset (multiprocessing)
+  subset: 200
+  batch_size: 8
+  workers: null
+
+log_every: 25

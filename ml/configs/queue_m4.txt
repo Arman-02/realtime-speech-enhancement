@@ -1,0 +1,16 @@
+# M4 training queue (PLAN.md §6.2) for scripts/run_queue.sh: one config per line, run in order.
+# R0 (crn_small) and R2/R3 (crn64/crn128) were started by hand. R15/R16 (demo model) are not queued yet.
+configs/teacher_bigru512.yaml      # R1  teacher, bi-GRU 512
+configs/crn64_kd.yaml              # R4  CRN-64 + KD
+configs/crn128_kd.yaml             # R5  CRN-128 + KD (beta 1.0)
+configs/crn256_kd.yaml             # R6  CRN-256 + KD
+configs/crn128_seed1.yaml          # R7  CRN-128 plain, seed 1
+configs/crn128_kd_seed1.yaml       # R8  CRN-128 + KD, seed 1
+configs/crn128_kd_b05.yaml         # R9  CRN-128 + KD, beta 0.5
+# Augmentation ablations moved ahead of lookahead: OOD generalization is the bigger gap.
+configs/crn256_50ep.yaml           # R12b plain CRN-256 (50 ep): matched baseline for R12–R14
+configs/crn256_musan_50ep.yaml     # R12 + MUSAN (50 ep)
+configs/crn256_reverb_50ep.yaml    # R13 + reverb (50 ep)
+configs/crn256_miclevel_50ep.yaml  # R14 + mic/level (50 ep)
+configs/crn256_la1.yaml            # R10 lookahead k = 1
+configs/crn256_la2.yaml            # R11 lookahead k = 2

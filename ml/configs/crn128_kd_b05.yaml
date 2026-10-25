@@ -1,0 +1,5 @@
+# R9: CRN-128 + KD with beta = 0.5 (beta sweep; R5 uses 1.0).
+base: crn128_kd.yaml
+run_name: crn128_kd_b05
+distill:
+  beta: 0.5
