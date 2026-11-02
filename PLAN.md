@@ -292,6 +292,8 @@ AdamW (lr 1e-3), a 2-epoch warmup then cosine decay, 100 epochs, batch 32, gradi
 2. **Competing talker (`talker`):** VB-D test speech mixed with a LibriSpeech `test-clean` speaker at signal-to-interference ratios of {0, 5, 10} dB, 300 clips. We expect the model to largely **keep** the interfering voice, since it was never trained to remove speech. This is reported as a measured limitation, not something to optimize for.
 3. **Real recordings (`real`):** 20–30 clips recorded by the author on an actual earbud and a phone mic, in a café, on a street, in an office, outdoors and in a car. Each is 8–15 s long and logged in `recordings/manifest.csv` (device, place, notes). Scored with DNSMOS P.835 only. Optionally, the real-recording portion of the DNS Challenge blind test set is added.
 4. **Reference rows** (RNNoise, DeepFilterNet3) are evaluated on every set.
+5. **Reverberant speech (`reverb`, added 2026-10-25).** 300 VB-D test utterances, each convolved with a held-out RIR (150 simulated test RIRs and 150 drawn from the 69 real measured ones), plus that utterance's own DEMAND test noise at its original SNR. The reference is the direct path plus 50 ms of early reflections, the same target reverb augmentation trains toward, so DNSMOS is reported alongside as a reference-free check. Results are broken down by T60 bucket. Built by `build_ood_sets.py --only reverb`.
+   - **Result:** reverb augmentation raises PESQ from 1.92 to 2.11 and STOI from 0.877 to 0.902, at a cost of only −0.02 PESQ on VB-D. It was therefore included in the demo model.
 
 ### 4.11 Latency ablation: lookahead (new; offline experiment)
 - **Model:** the CRN with k ∈ {0, 1, 2} frames of lookahead, implemented by training the model to emit frame *t − k* after seeing frames up to *t*. The GRU stays causal; the output and target are shifted by k.
@@ -362,6 +364,11 @@ Responsive, dark by default, accessible, main bundle 67 kB gzipped (budget 300 k
 | M5  | Ship | Deployed site, README with final results and hero plot, demo video/GIF, model card, CI green | Public URL |
 | S   | Stretch | Wind noise with a dedicated wind test set (wind is turbulence at the mic, so it needs its own data), 48 kHz model, TFLite/CoreML, target-speaker enhancement, Conv-TasNet on a cloud GPU | — |
 
+**Status (2026-11-02).**
+- **M0–M4 done.** All runs R0–R16b are trained and evaluated on four test sets (vbd, ood_esc, reverb, talker).
+- **The demo model `demo_crn256` (no KD) is live on the site.** KD on augmented data gave no significant gain (|Δ PESQ| ≤ 0.01, p > 0.2), so R16b doesn't ship.
+- **Remaining:** M4.5 (real recordings, listening test) and M5 (deploy, final polish).
+
 ### 6.2 Run registry (compute budget on the M4 Pro, one run at a time on MPS)
 
 | Run | Config | Purpose | Est. time |
@@ -375,8 +382,9 @@ Responsive, dark by default, accessible, main bundle 67 kB gzipped (budget 300 k
 | R10, R11 | CRN-256, k = 1 and k = 2 | Lookahead | 3.2 h each |
 | R12b | CRN-256 plain, 50 epochs | Matched baseline for R12–R14 (they train for 50 epochs, not 100) | ~1.7 h |
 | R12–R14 | CRN-256 50 epochs: +MUSAN, +reverb, +mic/level | Augmentation ablations, judged on OOD sets | ~1.7 h each |
-| R15 | Teacher on demo data | KD teacher for the demo model | ~6 h |
-| R16 | Demo model (all augmentation, KD if it helped) | Ships on the site | ~5 h |
+| R16a | `demo_crn256`: MUSAN + reverb + mic/level, 100 epochs, no KD | Ships on the site first | ~3 h (queued 2026-10-25) |
+| R15 | `teacher_demo`: bi-GRU 512 on the demo data | KD teacher for the demo model | ~6 h |
+| R16b | `demo_crn256_kd`: R16a + KD (β = 0.5) | Replaces R16a if significantly better on the OOD sets | ~4.5 h |
 | —   | Conv-TasNet | Optional baseline | 15 h (cloud GPU or skip) |
 
 **Status (2026-10-24).** R0–R8 are done. The queue was reordered so that R12b and R12–R14 run **before** R10/R11, because the benchmark model generalizes poorly out of domain (ESC-50 PESQ 1.59, against 2.15 for DeepFilterNet3). The Pareto chart now defaults to the OOD set, since VB-D test barely separates model sizes (CRN-64 2.78 vs CRN-256 2.76).

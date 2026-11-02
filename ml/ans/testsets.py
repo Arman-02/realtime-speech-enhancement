@@ -20,14 +20,20 @@ from pathlib import Path
 from ans.augment import PATH_KEYS, find_data_manifest
 from ans.data import REPO_ROOT, manifest_path
 
-SET_ORDER = ("vbd", "ood_esc", "talker", "real")
+SET_ORDER = ("vbd", "ood_esc", "talker", "reverb", "real")
 SET_META = {
     "vbd": {"label": "VoiceBank+DEMAND test", "intrusive": True, "noise_seen_in_training": False},
     "ood_esc": {"label": "VB-D speech + ESC-50 noise", "intrusive": True, "noise_seen_in_training": False},
     "talker": {"label": "Competing talker", "intrusive": True, "noise_seen_in_training": False},
+    "reverb": {"label": "Reverberant speech (held-out rooms)", "intrusive": True, "noise_seen_in_training": False},
     "real": {"label": "Real recordings", "intrusive": False, "noise_seen_in_training": False},
 }
-MANIFEST_NAMES = {"ood_esc": ("ood_esc",), "talker": ("ood_talker", "talker"), "real": ("real",)}
+MANIFEST_NAMES = {
+    "ood_esc": ("ood_esc",),
+    "talker": ("ood_talker", "talker"),
+    "reverb": ("ood_reverb",),
+    "real": ("real",),
+}
 
 
 @dataclass(frozen=True)

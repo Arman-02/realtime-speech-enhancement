@@ -1,0 +1,11 @@
+# R16a: demo model (ships on the website). CRN-256, 100 epochs, the augmentations that helped in R12–R14
+# (MUSAN: ESC-50 PESQ 1.57 -> 2.11; reverb: reverb-set PESQ 1.92 -> 2.11; mic/level: ESC-50 1.57 -> 1.62).
+# No distillation.
+base: crn_small.yaml
+run_name: demo_crn256
+data:
+  augment:
+    extra_noise: {prob: 0.5, manifest: noise_train}
+    reverb: {prob: 0.5, manifest: rir_train, early_ms: 50.0}
+    mic: {prob: 0.5}
+    level: {prob: 0.5, dbfs: [-45.0, -3.0]}

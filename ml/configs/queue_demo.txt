@@ -1,0 +1,4 @@
+# Demo-model queue (PLAN.md §4.12, §6.2 R15/R16) for scripts/run_queue.sh.
+configs/demo_crn256.yaml           # R16a demo model: MUSAN + reverb + mic/level, no KD (ships first)
+configs/teacher_demo.yaml          # R15  bi-GRU 512 teacher on the same augmented data
+configs/demo_crn256_kd.yaml        # R16b demo model + KD (beta 0.5); ships if significantly better OOD

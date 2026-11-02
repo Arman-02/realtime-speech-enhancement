@@ -1,0 +1,8 @@
+# R16b: demo model + distillation from teacher_demo (beta 0.5, which matched or beat 1.0 at CRN-128).
+# Ships instead of demo_crn256 only if it is significantly better on the OOD sets.
+base: demo_crn256.yaml
+run_name: demo_crn256_kd
+distill:
+  teacher_ckpt: checkpoints/teacher_demo/best.pt
+  beta: 0.5
+  gamma: 0.0

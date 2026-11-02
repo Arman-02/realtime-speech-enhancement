@@ -11,28 +11,36 @@ A causal neural noise suppressor that removes background noise (traffic, cafés,
 ## Highlights
 
 - **Streaming by design.** A causal convolutional-recurrent network (CRN) predicts a bounded complex ratio mask on 20 ms / 10 ms-hop STFT frames. Frame-by-frame inference is bit-for-bit equivalent to offline inference, and this is enforced by tests.
-- **Distillation for small causal models.** A non-causal teacher is distilled into causal students of three sizes. The result is a quality-vs-compute Pareto curve for plain vs. distilled training, backed by paired significance tests.
-- **Measured beyond the benchmark.** PESQ-WB, STOI/ESTOI and SI-SDR on VoiceBank+DEMAND, where all test noise types are unseen in training. Also out-of-domain noise, competing-talker and real-recording sets scored with DNSMOS P.835, plus RNNoise and DeepFilterNet3 reference rows.
+- **Generalization, measured.** The benchmark-only model looked strong on VoiceBank+DEMAND but fell apart on unseen noise. Training-data augmentation (MUSAN noise, simulated rooms, mic coloration, level range) lifted out-of-domain PESQ by +0.55 and reverberant PESQ by +0.30. It now matches DeepFilterNet3 on unseen noise (PESQ) with a 1.2M-parameter causal model.
+- **Distillation, honestly reported.** A non-causal teacher distilled into causal students gives a small, seed-consistent gain on VB-D-only training (+0.045 PESQ at 128 units, two seeds per arm), and **no gain** once the training data is augmented.
+- **Measured beyond the benchmark.** PESQ-WB, STOI/ESTOI, SI-SDR and DNSMOS P.835 are reported on four test sets: VoiceBank+DEMAND (all noise types unseen in training), ESC-50 noise, held-out reverberant rooms, and competing talkers. Every comparison uses paired Wilcoxon tests with Holm correction, and RNNoise and DeepFilterNet3 are included as reference rows.
 - **Why it sounds the way it does.** Each model's effect is split into *speech distortion* and *noise reduction*, and an adjustable attenuation limit lets you tune the tradeoff yourself.
 - **Deployable.** The model is exported to ONNX (fp32 and int8) with per-frame latency and real-time factor benchmarks, and runs in the browser through `onnxruntime-web`.
 - **Interactive frontend.** Upload or record audio, A/B noisy vs. enhanced vs. clean, view spectrograms, or switch on **live mic denoising**. The app is a fully static site with no server-side inference.
 
 ## Results
 
-_Evaluated on the VoiceBank+DEMAND test set (824 utterances, 16 kHz). None of its noise types appear in training. Timing is per 10 ms frame on 1 CPU thread (Apple M4 Pro, ONNX Runtime). More rows (distillation, out-of-domain sets, DNSMOS, reference systems) will land as the milestones in [PLAN.md](PLAN.md) progress._
+There are two CRN-256 models: a **benchmark model**, trained on VoiceBank+DEMAND only for comparability with published results, and a **demo model**, the same architecture trained with augmentation, which is what the website runs. Both are causal, have 1.21M parameters and run at 0.13 ms per 10 ms frame on one CPU thread (Apple M4 Pro, ONNX Runtime).
 
-| Model                          | Causal | Params | PESQ ↑ | STOI ↑ | SI-SDR ↑ (dB) | DNSMOS OVRL ↑ | ms / frame |
-|--------------------------------|:------:|-------:|-------:|-------:|--------------:|--------------:|-----------:|
-| Noisy (unprocessed)            |   —    |    —   |  1.97  | 0.921  |     8.45      |     2.70      |     —      |
-| Wiener (min. statistics)       |   ✓    |    0   |  2.20  | 0.899  |    12.23      |     2.76      |   0.02     |
-| RNNoise¹                       |   ✓    |    —   |  2.09  | 0.888  |    12.13      |     2.94      |     —      |
-| DeepFilterNet3¹                |   ✓    |    —   |  2.70  | 0.925  |    17.24      |   **3.21**    |     —      |
-| **CRN-256 (benchmark model)**  |   ✓    |  1.21M | **2.76** | **0.937** |  16.73    |     3.03      | **0.13**   |
-| Teacher (bi-GRU 512, offline)  |   ✗    |    —   |  2.93  | 0.946  |    18.16      |     3.15      |     —      |
+**PESQ / DNSMOS OVRL on four test sets:**
+
+| Model | VoiceBank+DEMAND (824) | ESC-50 noise (500) | Reverberant rooms (300) | Competing talker (300) |
+|---|---|---|---|---|
+| Noisy (unprocessed) | 1.97 / 2.70 | 1.31 / 2.09 | 1.59 / 1.94 | 1.25 / 2.64 |
+| Wiener (min. statistics) | 2.20 / 2.76 | 1.40 / 2.28 | 1.67 / 2.18 | 1.21 / 2.57 |
+| RNNoise¹ | 2.09 / 2.94 | 1.74 / 2.87 | 1.51 / 2.35 | 1.26 / 2.80 |
+| DeepFilterNet3¹ | 2.70 / **3.21** | **2.15** / **3.01** | 2.08 / **2.88** | 1.31 / **2.85** |
+| CRN-256 benchmark | 2.76 / 3.03 | 1.59 / 2.45 | 1.91 / 2.51 | 1.29 / 2.69 |
+| **CRN-256 demo** | **2.92** / 3.06 | 2.14 / 2.79 | **2.21** / 2.60 | **1.34** / 2.75 |
+| Teacher (bi-GRU 512, offline, augmented) | 3.09 / 3.16 | 2.37 / 2.93 | 2.37 / 2.77 | 1.45 / 2.84 |
 
 ¹ These are full-band 48 kHz models, run here by resampling 16 → 48 → 16 kHz. They were trained on far more data, and their published numbers come from a different evaluation setup.
 
-**Out-of-domain noise is the harder test.** On VoiceBank+DEMAND speech mixed with ESC-50 noise (500 clips, −5 to 15 dB), the benchmark CRN scores PESQ **1.59**, against **2.15** for DeepFilterNet3. A model trained only on VoiceBank+DEMAND does well on that benchmark but generalizes poorly, which motivates the augmented demo model (in progress). In the competing-talker test, every system keeps the interfering voice.
+**What the numbers say** (paired Wilcoxon, Holm-corrected):
+- **Augmentation is the biggest win.** Compared with the benchmark, the demo model gains +0.55 PESQ on ESC-50 noise, +0.30 on reverberant rooms and +0.16 on VoiceBank+DEMAND (all p < 1e-15). MUSAN noise accounts for most of the out-of-domain gain, and room-impulse augmentation for the reverb gain, at a cost of −0.02 PESQ on VB-D.
+- **Against DeepFilterNet3:** the demo model is significantly better on PESQ for VB-D (+0.22), reverb (+0.13) and competing talkers (+0.03), and **tied on ESC-50 noise** (−0.007, p = 0.06). DeepFilterNet3 is consistently better on DNSMOS, by 0.15–0.28, so it likely *sounds* cleaner. A blind listening test (planned, via the site's hidden `#/listen` page) will show which metric listeners agree with.
+- **The competing-talker test is a known limitation.** Every system keeps the interfering voice, because none of them is trained to tell speakers apart.
+- **The reverb reference** is the direct path plus 50 ms of early reflections, which matches the reverb-augmentation target and therefore favours the demo model on intrusive metrics. DNSMOS, which uses no reference, shows the same ranking among the CRNs.
 
 **Suppression vs. distortion.** The attenuation limit trades noise reduction against speech distortion smoothly:
 
@@ -44,7 +52,12 @@ _Evaluated on the VoiceBank+DEMAND test set (824 utterances, 16 kHz). None of it
 
 **Efficiency.** The CRN uses 1.96 M MACs per frame (0.2 GMAC/s) and runs at a real-time factor of 0.013 in ONNX Runtime, so one CPU core spends 1.3 % of real time on it. In the browser it takes about 0.2 ms per frame. Dynamic int8 quantization shrinks it to 3.7 MB with no loss in PESQ (2.76). The GRU stays fp32, so the size saving is modest.
 
-**Distillation (preliminary).** At 128 hidden units, with two seeds per arm, both distilled students beat both plain ones. VB-D PESQ is 2.795 and 2.807 against 2.740 and 2.772 (+0.045 on average), and ESC-50 PESQ improves by +0.016. Full Pareto results across sizes are on the Results page of the demo.
+**Distillation.**
+- **VB-D-only training:** a non-causal bi-GRU-512 teacher (2.93 PESQ) distilled into causal students gives a small gain at 128 units. With two seeds per arm, both distilled students beat both plain ones: VB-D PESQ 2.795 and 2.807 against 2.740 and 2.772 (+0.045), and ESC-50 PESQ +0.016.
+- **Augmented training:** with a teacher trained on the same augmented data, distillation gives **no significant gain** on any test set (|Δ PESQ| ≤ 0.01, p > 0.2). The shipped demo model is therefore trained without it.
+- **Pareto curve:** quality vs. compute across 64/128/256 units is on the demo's Results page. On VB-D, size barely matters (CRN-64 scores 2.78, CRN-256 2.76), so the chart defaults to the out-of-domain set.
+
+**Latency.** Allowing 10 or 20 ms of lookahead adds only +0.03 and +0.05 PESQ on VB-D (+0.02 and +0.04 out of domain). The shipped model therefore keeps 20 ms algorithmic latency, which is the right tradeoff for calls.
 
 ## How it works
 
@@ -56,7 +69,12 @@ mic ─▶ 16 kHz ─▶ STFT (20 ms sqrt-Hann, 10 ms hop) ─▶ CRN ─▶ com
 
 - **Input features:** power-law compressed magnitude (|X|^0.3) plus normalized real and imaginary parts.
 - **Loss:** compressed complex spectral loss (c = 0.3), with optional multi-resolution STFT and SI-SDR terms.
-- **Training data:** VoiceBank+DEMAND, augmented with dynamic noise remixing over SNRs from −5 to 20 dB.
+- **Training data:** VoiceBank+DEMAND with dynamic noise remixing over SNRs from −5 to 20 dB. The demo model also uses:
+  - MUSAN noise;
+  - 3,000 simulated rooms (the target keeps the direct path plus 50 ms of early reflections);
+  - random mic EQ and band-limiting;
+  - a −45 to −3 dBFS level range.
+- **No leakage:** test-only noise, rooms and talkers come from separate corpora. A cross-correlation audit removed 27 ESC-50 clips that were copies of MUSAN training noise.
 - **Latency budget:** 20 ms algorithmic (one window), plus inference (< 1 ms/frame target), plus the audio I/O buffer.
 
 ## Repository layout

@@ -15,6 +15,7 @@
 Outputs (paths in manifests are relative to the repo root):
     data/ood/esc/{clean,noisy}/<id>.wav       manifests/ood_esc.csv     VB-D test speech + ESC-50 noise (500)
     data/ood/talker/{clean,noisy}/<id>.wav    manifests/ood_talker.csv  VB-D test speech + LibriSpeech talker (300)
+    data/ood/reverb/{clean,noisy}/<id>.wav    manifests/ood_reverb.csv  VB-D test speech * test RIR + its DEMAND noise (300)
     data/failures_src/<category>/*.wav        data/failures_src/manifest.csv
     data/real/<id>.wav                        manifests/real.csv        from recordings/manifest.csv (if any)
 
@@ -54,6 +55,7 @@ ESC_SNRS = [-5, 0, 5, 10, 15]
 TALKER_SIRS = [0, 5, 10]
 N_ESC = 500
 N_TALKER = 300
+N_REVERB = 300
 MANIFEST_COLUMNS = ["id", "speaker", "clean_path", "noisy_path", "num_samples", "noise_type", "snr_db"]
 MAX_FAILURE_S = 10.0
 
@@ -294,6 +296,58 @@ def build_ood_talker(out: Path, seed: int) -> list[dict]:
     _clear_stale(base / "noisy", keep)
     write_csv(out / "manifests" / "ood_talker.csv", rows,
               MANIFEST_COLUMNS + ["clean_src", "interferer_speaker", "interferer_gender", "interferer_src"])
+    return rows
+
+
+def prepare_rir(h: np.ndarray, early_ms: float = 50.0, pre_ms: float = 1.0) -> tuple[np.ndarray, np.ndarray]:
+    """Same convention as ml/ans/augment.prepare_rir: trim pre-delay, peak-normalise, early = first 50 ms."""
+    peak = int(np.argmax(np.abs(h)))
+    start = max(0, peak - round(pre_ms * SR / 1000))
+    full = h[start:] / (np.abs(h[peak]) + 1e-12)
+    return full, full[: (peak - start) + round(early_ms * SR / 1000)]
+
+
+def t60_bucket(t60: float) -> str:
+    return "T60 < 0.4 s" if t60 < 0.4 else ("T60 0.4-0.8 s" if t60 < 0.8 else "T60 > 0.8 s")
+
+
+def build_ood_reverb(out: Path, seed: int) -> list[dict]:
+    """VB-D test speech convolved with held-out RIRs, plus that utterance's own DEMAND test noise at its
+    original SNR. Reference = direct path + 50 ms early reflections (the reverb-augmentation target)."""
+    vbd = read_csv(out / "vbd16k" / "manifests" / "test.csv")
+    rirs = read_csv(out / "manifests" / "rir_test.csv")
+    sim = [r for r in rirs if r["source"] == "sim"]
+    real = [r for r in rirs if r["source"] != "sim"]
+    rng = np.random.default_rng([seed, 301])
+    half = N_REVERB // 2
+    picks = [sim[i] for i in rng.permutation(len(sim))[:half]]
+    picks += [real[i % len(real)] for i in rng.permutation(max(half, len(real)))[:half]]
+    speech = [vbd[i] for i in rng.choice(len(vbd), size=N_REVERB, replace=False)]
+    order = rng.permutation(N_REVERB)
+    picks = [picks[i] for i in order]
+    base = out / "ood" / "reverb"
+    rows = []
+    for i, (u, h_row) in enumerate(tqdm(list(zip(speech, picks)), desc="reverb", dynamic_ncols=True)):
+        uid = f"reverb_{i:03d}"
+        clean, noisy = load(u["clean_path"]), load(u["noisy_path"])
+        full, early = prepare_rir(load(h_row["path"]))
+        wet = fftconvolve(clean, full)[: len(clean)]
+        target = fftconvolve(clean, early)[: len(clean)]
+        c, y = mix_at(wet, noisy - clean, float(u["snr_db"]))
+        k = float(np.dot(c, wet) / max(np.dot(wet, wet), 1e-12))
+        write_wav(base / "clean" / f"{uid}.wav", k * target)
+        write_wav(base / "noisy" / f"{uid}.wav", y)
+        t60 = float(h_row["t60"])
+        rows.append({"id": uid, "speaker": u["speaker"], "clean_path": rel(base / "clean" / f"{uid}.wav"),
+                     "noisy_path": rel(base / "noisy" / f"{uid}.wav"), "num_samples": len(clean),
+                     "noise_type": t60_bucket(t60), "snr_db": u["snr_db"], "clean_src": u["id"],
+                     "rir_src": h_row["id"], "rir_source": h_row["source"], "t60": f"{t60:.3f}",
+                     "demand_noise": u.get("noise_type", "")})
+    keep = {r["id"] for r in rows}
+    _clear_stale(base / "clean", keep)
+    _clear_stale(base / "noisy", keep)
+    write_csv(out / "manifests" / "ood_reverb.csv", rows,
+              MANIFEST_COLUMNS + ["clean_src", "rir_src", "rir_source", "t60", "demand_noise"])
     return rows
 
 
@@ -575,13 +629,15 @@ def main() -> None:
     ap.add_argument("--out", type=Path, default=REPO_ROOT / "data")
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--workers", type=int, default=MAX_WORKERS)
-    ap.add_argument("--only", nargs="+", choices=["esc", "talker", "failures", "real"])
+    ap.add_argument("--only", nargs="+", choices=["esc", "talker", "reverb", "failures", "real"])
     args = ap.parse_args()
     out = args.out.resolve()
-    steps = args.only or ["esc", "talker", "failures", "real"]
+    steps = args.only or ["esc", "talker", "reverb", "failures", "real"]
     workers = max(1, min(args.workers, MAX_WORKERS))
     esc = build_ood_esc(out, args.seed) if "esc" in steps else []
     talker = build_ood_talker(out, args.seed) if "talker" in steps else []
+    if "reverb" in steps:
+        build_ood_reverb(out, args.seed)
     fails = build_failures(out, args.seed) if "failures" in steps else []
     if "real" in steps:
         build_real(out)

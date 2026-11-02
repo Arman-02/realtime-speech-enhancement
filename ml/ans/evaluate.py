@@ -45,7 +45,8 @@ from ans.data import ML_ROOT, REPO_ROOT, SyntheticDataset
 from ans.dsp import HOP
 from ans.metrics import compute_metrics, mean_ci
 from ans.models import ClassicalEnhancer, count_params, load_checkpoint
-from ans.registry import BENCHMARK_RUN, ckpt_config, display_name, run_info
+from ans.registry import BENCHMARK_RUN, DEMO_RUN, ckpt_config, display_name, run_info
+from ans.testsets import SET_ORDER
 from ans.train import pick_device
 
 VERSION = "0.2"
@@ -379,7 +380,7 @@ def pareto_table(rows: list[dict]) -> list[dict]:
     out = []
     by = {(r["model"], r["set"]): r for r in rows}
     for r in rows:
-        if not _is_plain_registry(r) or r.get("set") not in ("vbd", "ood_esc", "talker", "real"):
+        if not _is_plain_registry(r) or r.get("set") not in SET_ORDER:
             continue
         e = {
             "model": r["model"],
@@ -395,7 +396,7 @@ def pareto_table(rows: list[dict]) -> list[dict]:
         for k in ("pesq", "stoi", "si_sdr", *DNSMOS_KEYS):
             e[k] = r.get(k)
         if r["set"] == "vbd":  # convenience: OOD numbers alongside the VB-D point
-            for s in ("ood_esc", "talker"):
+            for s in ("ood_esc", "talker", "reverb"):
                 o = by.get((r["model"], s))
                 if o:
                     e[f"pesq_{s}"], e[f"dnsmos_ovrl_{s}"] = o.get("pesq"), o.get("dnsmos_ovrl")
@@ -445,41 +446,49 @@ def significance_table(rows: list[dict], store: list[dict]) -> list[dict]:
     for r in rows:
         rows_by_set[r["set"]].append(r)
     out = []
+    def arm(r: dict) -> tuple:  # everything that defines a training arm except distillation
+        aug = r.get("augment") or ()
+        return (r.get("hidden"), r.get("seed", 0), tuple(aug), r.get("epochs", 100), r.get("lookahead") or 0)
+
     for set_name, srows in rows_by_set.items():
         names = {r["model"] for r in srows}
-        plain = {
-            (r.get("hidden"), r.get("seed", 0)): r["model"]
-            for r in srows
-            if _is_plain_registry(r) and not r.get("distilled")
-        }
-        kd_pairs = []
-        for r in srows:
-            if _is_plain_registry(r) and r.get("distilled"):
-                b = plain.get((r.get("hidden"), r.get("seed", 0)))
-                if b:
-                    kd_pairs.append((r["model"], b))
+        ours = [r for r in srows if r.get("family") == "ours" and r.get("hidden") is not None]
+        plain = {arm(r): r["model"] for r in ours if not r.get("distilled")}
+        kd_pairs = [(r["model"], plain[arm(r)]) for r in ours if r.get("distilled") and arm(r) in plain]
         bench = next((r["model"] for r in srows if r.get("run") == BENCHMARK_RUN), None)
-        base_pairs = [(bench, FIXED[k][0]) for k in FIXED if bench and FIXED[k][0] in names]
+        demo = next((r["model"] for r in srows if r.get("run") == DEMO_RUN), None)
+        fixed = [FIXED[k][0] for k in FIXED if FIXED[k][0] in names]
+        base_pairs = [(bench, b) for b in fixed if bench]
+        demo_pairs = [(demo, b) for b in [bench, *fixed] if demo and b]
         metrics = ("pesq", "stoi", "si_sdr", "dnsmos_ovrl") if set_name != "real" else ("dnsmos_ovrl",)
         for metric in metrics:
             scores = by_set[set_name][metric]
             out += compare_pairs(scores, kd_pairs, metric, set_name, "kd_vs_plain")
             out += compare_pairs(scores, base_pairs, metric, set_name, "benchmark_vs_baselines")
+            out += compare_pairs(scores, demo_pairs, metric, set_name, "demo_vs_others")
     for r in out:
         for k in ("median_diff", "mean_diff", "statistic", "p_wilcoxon", "p_holm"):
             r[k] = None if r.get(k) is None or not math.isfinite(r[k]) else float(f"{r[k]:.6g}")
     return out
 
 
-def per_sample_table(store: list[dict]) -> dict:
+def per_sample_table(store: list[dict], rows: list[dict]) -> dict:
     try:
         ids = {s["id"] for s in json.loads(SAMPLES_JSON.read_text())}
     except (OSError, json.JSONDecodeError, KeyError, TypeError):
         return {}
+    # §3.3: {sample id: {model: metrics}}, limited to the rows Studio shows (inputs, baselines,
+    # reference systems, the benchmark and the shipped demo model), in that order.
+    rank = {"input": 0, "baseline": 1, "reference": 2}
+    shown = {
+        r["model"]: rank.get(r.get("family"), 3 if r.get("run") == BENCHMARK_RUN else 4)
+        for r in rows
+        if r.get("set") == "vbd" and (r.get("family") in rank or r.get("run") in (BENCHMARK_RUN, DEMO_RUN))
+    }
     out: dict = defaultdict(dict)
-    for rec in store:
-        if rec["set"] == "vbd" and rec["id"] in ids:
-            out[rec["model"]][rec["id"]] = {
+    for rec in sorted(store, key=lambda s: shown.get(s["model"], 99)):
+        if rec["set"] == "vbd" and rec["id"] in ids and rec["model"] in shown:
+            out[rec["id"]][rec["model"]] = {
                 k: _clean(float(rec[k]) if rec.get(k) not in (None, "") else None)
                 for k in ("pesq", "stoi", "si_sdr", "dnsmos_ovrl")
             }
@@ -701,7 +710,7 @@ def evaluate(
         result["pareto"] = pareto_table(result["rows"])
         result["lookahead"] = lookahead_table(result["rows"])
         result["significance"] = significance_table(result["rows"], store)
-        result["per_sample"] = per_sample_table(store)
+        result["per_sample"] = per_sample_table(store, result["rows"])
         result.setdefault("quantization", None)
         result.setdefault("mos", None)
         result.pop("dataset", None)
@@ -769,7 +778,7 @@ def main() -> None:
         default=["noisy", "classical"],
         help="noisy classical rnnoise deepfilternet crn:<ckpt> ...",
     )
-    ap.add_argument("--sets", nargs="+", default=["vbd"], help="vbd ood_esc talker real (missing ones are skipped)")
+    ap.add_argument("--sets", nargs="+", default=["vbd"], help="vbd ood_esc talker reverb real (missing are skipped)")
     ap.add_argument("--decompose", action="store_true", help="speech distortion / noise reduction (mask-based models)")
     ap.add_argument("--atten-sweep", nargs="*", type=_lim, help="atten_lim_db values (default 6 12 18 24 inf)")
     ap.add_argument("--atten-model", help="model (display name or run) for the sweep; default the benchmark CRN")

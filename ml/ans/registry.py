@@ -10,6 +10,7 @@ from pathlib import Path
 from typing import Any
 
 BENCHMARK_RUN = "crn_small"
+DEMO_RUN = "demo_crn256"
 AUG_LABELS = {"extra_noise": "+MUSAN", "reverb": "+reverb", "mic": "+mic", "level": "+level"}
 
 
@@ -46,7 +47,8 @@ def display_name(cfg: dict) -> str:
         return str(cfg["display_name"])
     info = run_info(cfg)
     if info["teacher"]:
-        return f"Teacher (bi-GRU {info['hidden']})"
+        aug = _augment_tags(cfg)
+        return f"Teacher (bi-GRU {info['hidden']}" + (f", {', '.join(aug)})" if aug else ")")
     if info["arch"] not in ("ans_crn", "crn"):
         return str(cfg.get("run_name") or info["arch"])
     if info["run"] == BENCHMARK_RUN:

@@ -1,0 +1,9 @@
+# R15: distillation teacher for the demo model: bi-GRU 512, trained on the same augmented data as demo_crn256.
+# (The VB-D-only teacher scores ESC-50 PESQ 1.76, below the MUSAN student's 2.11, so it cannot be reused.)
+base: demo_crn256.yaml
+run_name: teacher_demo
+model:
+  name: crn_teacher
+  kwargs:
+    hidden: 512
+    bidirectional: true

@@ -31,7 +31,7 @@ from ans.decompose import crn_decompose, decomposition_metrics
 from ans.dsp import SAMPLE_RATE
 from ans.metrics import compute_metrics
 from ans.models import ClassicalEnhancer, load_checkpoint
-from ans.registry import ckpt_config, display_name
+from ans.registry import ckpt_config, display_name, run_info
 
 MAX_S = 10.0
 TARGET_DBFS = -26.0
@@ -219,7 +219,7 @@ def measure(cat: str, noisy: np.ndarray, enh: np.ndarray, clean: np.ndarray | No
     return m
 
 
-def explain(cat: str, m: dict, note: str, ref_nr: float | None = None) -> str:
+def explain(cat: str, m: dict, note: str, ref_nr: float | None = None, reverb_trained: bool = False) -> str:
     """One or two sentences, every claim conditional on the measurements in ``m``."""
     g = m.get
 
@@ -283,10 +283,14 @@ def explain(cat: str, m: dict, note: str, ref_nr: float | None = None) -> str:
             if stoi_drop > 0.02
             else ""
         )
-        return (
-            f"The reverberant tail is reduced by only {f('noise_reduction_db')} dB relative to the direct path: "
-            "the benchmark model was trained without reverb and treats smeared speech as speech." + extra
+        why = (
+            "this tail is longer than most training rooms (T60 up to 0.8 s), and the model only learns to remove "
+            "late reverberation, keeping the first 50 ms of reflections."
+            if reverb_trained
+            else "the benchmark model was trained without reverb and treats smeared speech as speech."
         )
+        nr = f("noise_reduction_db")
+        return f"The reverberant tail is reduced by only {nr} dB relative to the direct path: {why}" + extra
     if cat == "clipping":
         return (
             f"Clipping distortion ({(g('clipped_fraction_input') or 0) * 100:.0f}% of samples at full scale) is "
@@ -297,13 +301,13 @@ def explain(cat: str, m: dict, note: str, ref_nr: float | None = None) -> str:
     return note
 
 
-def _benchmark_nr() -> float | None:
+def _vbd_nr(run: str) -> float | None:
     try:
         res = json.loads((ML_ROOT / "exports" / "results.json").read_text())
     except (OSError, json.JSONDecodeError):
         return None
     for r in res.get("rows", []):
-        if r.get("run") == "crn_small" and r.get("set") == "vbd" and r.get("noise_reduction_db") is not None:
+        if r.get("run") == run and r.get("set") == "vbd" and r.get("noise_reduction_db") is not None:
             return float(r["noise_reduction_db"])
     return None
 
@@ -312,9 +316,12 @@ def render_failures(out: Path, crn_ckpt: Path, src: Path = FAILURES_SRC) -> list
     fdir = out / "failures"
     fdir.mkdir(parents=True, exist_ok=True)
     model = load_checkpoint(crn_ckpt)
-    name = display_name(ckpt_config(crn_ckpt))
+    cfg = ckpt_config(crn_ckpt)
+    name = display_name(cfg)
+    info = run_info(cfg)
+    reverb_trained = "reverb" in info["augment"]
     entries = []
-    ref_nr = _benchmark_nr()
+    ref_nr = _vbd_nr(info["run"])
     with open(src, newline="") as f:
         rows = list(csv.DictReader(f))
     for row in rows:
@@ -346,7 +353,7 @@ def render_failures(out: Path, crn_ckpt: Path, src: Path = FAILURES_SRC) -> list
                 "id": fid,
                 "title": f"{TITLES.get(cat, cat)} — {fid.replace('_', ' ')}",
                 "category": cat,
-                "explanation": explain(cat, m, row.get("note", ""), ref_nr),
+                "explanation": explain(cat, m, row.get("note", ""), ref_nr, reverb_trained),
                 "noisy": files["noisy"],
                 "enhanced": files["enhanced"],
                 "clean": clean_rel,
